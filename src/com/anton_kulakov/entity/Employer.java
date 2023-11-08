@@ -1,4 +1,4 @@
-package com.anton_kulakov;
+package com.anton_kulakov.entity;
 
 public class Employer extends Person {
     // 👨‍💼

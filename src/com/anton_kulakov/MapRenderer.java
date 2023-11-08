@@ -1,4 +1,5 @@
 package com.anton_kulakov;
 
-public class Renderer {
+public class MapRenderer {
+
 }
