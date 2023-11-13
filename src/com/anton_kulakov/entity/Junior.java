@@ -3,6 +3,12 @@ package com.anton_kulakov.entity;
 public class Junior extends Person {
     // 👶
     private int powerOfAttack;
+
+    public Junior(int speed, int hp, int powerOfAttack) {
+        super(speed, hp);
+        this.powerOfAttack = powerOfAttack;
+    }
+
     @Override
     void makeMove() {
         // На что может потратить ход хищник:
@@ -11,5 +17,4 @@ public class Junior extends Person {
         // 2. Атаковать работодателя. При этом количество HP работодателя уменьшается
         // на силу атаки джуниора.
     }
-    // Если значение HP работодателя опускается до 0, работодатель исчезает
 }
