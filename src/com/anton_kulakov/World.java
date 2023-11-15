@@ -3,7 +3,7 @@ package com.anton_kulakov;
 import com.anton_kulakov.entity.Entity;
 import java.util.HashMap;
 
-public class Map {
+public class World {
     public HashMap<Coordinates, Entity> entities = new HashMap<>();
 
     public boolean isCellEmpty(Coordinates coordinates) {

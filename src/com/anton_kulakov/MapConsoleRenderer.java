@@ -3,16 +3,16 @@ package com.anton_kulakov;
 import com.anton_kulakov.entity.Entity;
 
 public class MapConsoleRenderer {
-    public void render(Map map) {
+    public void render(World world) {
 
-        for (int row = 9; row > 0; row--) {
+        for (int row = 9; row >= 0; row--) {
             String line = row + "|";
-            for (int column = 1; column <= 11; column++) {
+            for (int column = 0; column <= 9; column++) {
                 Coordinates coordinates = new Coordinates(row, column);
-                if (map.isCellEmpty(coordinates)) {
+                if (world.isCellEmpty(coordinates)) {
                     line += "   ";
                 } else {
-                    line += getEntityImage(map.getEntity(coordinates));
+                    line += getEntityImage(world.getEntity(coordinates));
                 }
             }
 
@@ -20,7 +20,7 @@ public class MapConsoleRenderer {
         }
     }
 
-    private String getImageForEntity(Entity entity) {
+    private String setImageForEntity(Entity entity) {
         switch (entity.getClass().getSimpleName()) {
             case "House":
                 return "🏠";
@@ -43,6 +43,6 @@ public class MapConsoleRenderer {
         return "";
     }
     private String getEntityImage(Entity entity) {
-        return " " + getImageForEntity(entity) + " ";
+        return " " + setImageForEntity(entity) + " ";
     }
 }

@@ -4,7 +4,7 @@ import com.anton_kulakov.action.*;
 import java.util.List;
 
 public class Simulation {
-    private Map map = new Map();
+    private World world = new World();
     private int turnsCounter = 0;
     private MapConsoleRenderer renderer;
     private final List<Action> initActions = List.of(

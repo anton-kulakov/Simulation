@@ -1,11 +1,11 @@
 package com.anton_kulakov.action;
 
-import com.anton_kulakov.Map;
+import com.anton_kulakov.World;
 
 public class MakeMoveAction extends Action {
 
     @Override
-    public void doAction(Map map) {
+    public void doAction(World world) {
 
     }
 }
