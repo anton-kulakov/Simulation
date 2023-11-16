@@ -13,17 +13,8 @@ public class Main {
         public static void main(String[] args) {
 
                 World world = new World();
-                SetupDefaultMapAction setupDefaultMapAction = new SetupDefaultMapAction();
-                setupDefaultMapAction.doAction(world);
+//                SetupDefaultMapAction.doAction(world);
 
-                Coordinates c = new Coordinates(5, 5);
-                world.entities.put(c, new Employer(1,1));
 
-                RouteFinder r = new RouteFinder();
-                Coordinates target = r.findTarget(world, c);
-
-                MapConsoleRenderer renderer = new MapConsoleRenderer();
-                renderer.render(world);
-                System.out.println(target);
         }
 }

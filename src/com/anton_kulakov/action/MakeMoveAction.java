@@ -4,8 +4,7 @@ import com.anton_kulakov.World;
 
 public class MakeMoveAction extends Action {
 
-    @Override
-    public void doAction(World world) {
+    public static void doAction(World world) {
 
     }
 }

@@ -12,8 +12,7 @@ public class SetupDefaultMapAction extends Action {
     private static final int MAX_ENTITIES_ON_START = 40;
     private static final int NUMBER_OF_TYPES_OF_ENTITIES = 5;
     private static Random random = new Random();
-    @Override
-    public void doAction(World world) {
+    public static void doAction(World world) {
         List<Entity> entityList = new ArrayList<>();
         int max = MAX_ENTITIES_ON_START / NUMBER_OF_TYPES_OF_ENTITIES;
         for (int j = 0; j < max; j++) {
