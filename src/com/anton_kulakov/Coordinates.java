@@ -1,13 +1,15 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.entity.Entity;
-
 import java.util.Objects;
 
 public class Coordinates {
     public final Integer row;
     public final Integer column;
     public Coordinates parent;
+    public int FValue = 0;
+    public int GValue = 0;
+    public int HValue = 0;
 
     public Coordinates(Integer row, Integer column) {
         this.row = row;
