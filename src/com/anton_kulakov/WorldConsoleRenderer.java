@@ -2,7 +2,7 @@ package com.anton_kulakov;
 
 import com.anton_kulakov.entity.Entity;
 
-public class MapConsoleRenderer {
+public class WorldConsoleRenderer {
     public void render(World world) {
 
         for (int row = 9; row >= 0; row--) {
@@ -28,7 +28,7 @@ public class MapConsoleRenderer {
             case "Money":
                 return "\uD83D\uDCB0";
 
-            case "ProgrammingCourse":
+            case "ProgrammingSchool":
                 return "\uD83C\uDF93";
 
             case "Tree":

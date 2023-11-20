@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SetupDefaultMapAction extends Action {
-    private static final int MAX_ENTITIES_ON_START = 40;
-    private static final int NUMBER_OF_TYPES_OF_ENTITIES = 5;
+public class SetupDefaultWorldAction extends Action {
+    private static final int MAX_ENTITIES_ON_START = 48;
+    private static final int NUMBER_OF_TYPES_OF_ENTITIES = 6;
     private static Random random = new Random();
     public static void doAction(World world) {
         List<Entity> entityList = new ArrayList<>();
@@ -19,6 +19,7 @@ public class SetupDefaultMapAction extends Action {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());
+            entityList.add(new ProgrammingSchool(4, 10));
             entityList.add(new Employer(2, 40));
             entityList.add(new Junior(3, 20, 3));
         }

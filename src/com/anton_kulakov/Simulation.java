@@ -6,10 +6,11 @@ import java.util.List;
 public class Simulation {
     private World world = new World();
     private int turnsCounter = 0;
-    private MapConsoleRenderer renderer;
+    private WorldConsoleRenderer renderer;
     private final List<Action> initActions = List.of(
             // действия, совершаемые перед стартом симуляции. Пример - расставить объекты и существ на карте
-            new SetupDefaultMapAction()
+            new SetupDefaultWorldAction(),
+            new PrintStartInfoAction()
     );
     private final List<Action> turnActions = List.of(
             // действия, совершаемые каждый ход. Примеры - передвижение существ, добавить травы или

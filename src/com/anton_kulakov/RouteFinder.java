@@ -33,7 +33,7 @@ public class RouteFinder {
         return route;
     }
 
-    private Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates) {
+    public Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column));
