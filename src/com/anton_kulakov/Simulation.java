@@ -8,13 +8,10 @@ public class Simulation {
     private int turnsCounter = 0;
     private WorldConsoleRenderer renderer;
     private final List<Action> initActions = List.of(
-            // действия, совершаемые перед стартом симуляции. Пример - расставить объекты и существ на карте
             new SetupDefaultWorldAction(),
             new PrintStartInfoAction()
     );
     private final List<Action> turnActions = List.of(
-            // действия, совершаемые каждый ход. Примеры - передвижение существ, добавить травы или
-            // травоядных, если их осталось слишком мало
             new MakeMoveAction(),
             new AddMoneyAction()
     );
