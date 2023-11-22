@@ -12,7 +12,7 @@ public class SetupDefaultWorldAction extends Action {
     private static final int MAX_ENTITIES_ON_START = 48;
     private static final int NUMBER_OF_TYPES_OF_ENTITIES = 6;
     private static Random random = new Random();
-    public static void doAction(World world) {
+    public void doAction(World world) {
         List<Entity> entityList = new ArrayList<>();
         int max = MAX_ENTITIES_ON_START / NUMBER_OF_TYPES_OF_ENTITIES;
         for (int j = 0; j < max; j++) {
