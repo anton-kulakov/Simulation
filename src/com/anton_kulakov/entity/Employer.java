@@ -12,7 +12,7 @@ public class Employer extends Person {
     @Override
      void attack(World world, Coordinates targetCoordinates) {
         world.entities.remove(targetCoordinates);
-        this.changeHPAfterAttack(5);
+        this.changeHP(5);
     }
 
     @Override

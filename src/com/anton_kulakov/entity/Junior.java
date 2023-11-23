@@ -14,7 +14,7 @@ public class Junior extends Person {
     @Override
     void attack(World world, Coordinates targetCoordinates) {
         Employer targetEmployer = (Employer) world.entities.get(targetCoordinates);
-        targetEmployer.changeHPAfterAttack(-powerOfAttack);
+        targetEmployer.changeHP(-powerOfAttack);
 
         if (targetEmployer.getHP() <= 0) {
             world.entities.remove(targetCoordinates);

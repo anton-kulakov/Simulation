@@ -17,6 +17,7 @@ public class ProgrammingSchool extends Person {
 
         if (targetEmployer.getHP() > 5) {
             createNewJunior(world);
+            this.changeHP(3);
         }
     }
 

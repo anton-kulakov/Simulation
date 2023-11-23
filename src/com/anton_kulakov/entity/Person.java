@@ -22,7 +22,7 @@ public abstract class Person extends Entity {
         return hp;
     }
 
-    public void changeHPAfterAttack(int hp) {
+    public void changeHP(int hp) {
         this.hp += hp;
     }
 
