@@ -3,6 +3,8 @@ package com.anton_kulakov.entity;
 import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 
+import java.util.Optional;
+
 public class ProgrammingSchool extends Person {
     public ProgrammingSchool(int speed, int hp, int hpRequiredForMove) {
         super(speed, hp, hpRequiredForMove);
@@ -19,11 +21,11 @@ public class ProgrammingSchool extends Person {
     }
 
     private void createNewJunior(World world) {
-        Coordinates coordinatesForNewJunior = routeFinder.getNeighboringCell(world, this.coordinates);
+        Optional<Coordinates> coordinatesForNewJunior = routeFinder.getNeighboringCell(world, this.coordinates);
 
-        if (coordinatesForNewJunior != null) {
+        if (coordinatesForNewJunior.isPresent()) {
             Junior newJunior = new Junior(3, 20, 2, 3);
-            newJunior.coordinates = coordinatesForNewJunior;
+            newJunior.coordinates = coordinatesForNewJunior.get();
             world.entities.put(newJunior.coordinates, newJunior);
         }
     }

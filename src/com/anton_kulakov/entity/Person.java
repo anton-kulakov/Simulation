@@ -45,13 +45,12 @@ public abstract class Person extends Entity {
             world.entities.remove(this.coordinates);
             this.coordinates = nextStep;
 
+            this.hp -= this.hpRequiredForMove;
         } else if (!route.isEmpty()){
             nextStepRow = route.get(0).row;
             nextStepColumn = route.get(0).column;
             attack(world, new Coordinates(nextStepRow, nextStepColumn));
         }
-
-        this.hp -= this.hpRequiredForMove;
     }
 
     abstract void attack(World world, Coordinates nextStep);

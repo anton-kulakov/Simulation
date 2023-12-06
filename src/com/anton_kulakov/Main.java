@@ -1,18 +1,17 @@
 package com.anton_kulakov;
 
-import com.anton_kulakov.action.PrintStartInfoAction;
-import com.anton_kulakov.action.SetupDefaultWorldAction;
+import java.io.IOException;
 
 public class Main {
-        public static void main(String[] args) {
-                World world = new World();
-                SetupDefaultWorldAction setupDefaultWorldAction = new SetupDefaultWorldAction();
-                setupDefaultWorldAction.doAction(world);
+        public static void main(String[] args) throws IOException, InterruptedException {
+                Simulation simulation = new Simulation();
+                simulation.startSimulation();
 
-                WorldConsoleRenderer worldConsoleRenderer = new WorldConsoleRenderer();
-                worldConsoleRenderer.render(world);
+                int counter = 0;
+                while (counter < 6) {
+                        simulation.nextTurn();
 
-                PrintStartInfoAction p = new PrintStartInfoAction();
-                p.doAction(world);
+                        counter++;
+                }
         }
 }
