@@ -1,13 +1,18 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.entity.Entity;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class World {
-    public HashMap<Coordinates, Entity> entities = new HashMap<>();
+    public ConcurrentHashMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
 
-    public boolean isCellEmpty(Coordinates coordinates) {
-        return !entities.containsKey(coordinates);
+    public boolean isCellEmpty(int row, int column) {
+        for (Coordinates coordinates : entities.keySet()) {
+            if (coordinates.row == row && coordinates.column == column) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Entity getEntity(Coordinates coordinates) {

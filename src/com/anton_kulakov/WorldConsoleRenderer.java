@@ -20,7 +20,6 @@ public class WorldConsoleRenderer {
 
         System.out.println();
     }
-
     private String getEntityImage(Entity entity) {
         String image = switch (entity.getClass().getSimpleName()) {
             case "House" -> "🏠";
