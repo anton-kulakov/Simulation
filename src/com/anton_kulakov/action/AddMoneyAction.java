@@ -6,8 +6,6 @@ import com.anton_kulakov.World;
 import com.anton_kulakov.entity.Entity;
 import com.anton_kulakov.entity.Money;
 import com.anton_kulakov.entity.ProgrammingSchool;
-import java.util.Iterator;
-import java.util.Set;
 
 public class AddMoneyAction extends Action {
     public void doAction(World world) {
@@ -23,16 +21,16 @@ public class AddMoneyAction extends Action {
             while (counter < 4) {
                 for (Entity entity : world.entities.values()) {
                     if (entity instanceof ProgrammingSchool) {
-                        RouteFinder routeFinder = ((ProgrammingSchool) entity).routeFinder;
-                        Set<Coordinates> neighboringCells = routeFinder.getNeighboringCells(world, entity.coordinates);
+                        RouteFinder routeFinder = new RouteFinder();
+                        Coordinates newMoneyCoordinates = routeFinder.getNeighboringCell(world, entity.coordinates);
 
-                        Iterator<Coordinates> iterator = neighboringCells.iterator();
-                        Coordinates newMoneyCoordinates = iterator.next();
-                        Money newMoney = new Money();
+                        if (newMoneyCoordinates != null) {
+                            Money newMoney = new Money();
+                            newMoney.coordinates = newMoneyCoordinates;
+                            world.entities.put(newMoney.coordinates, newMoney);
 
-                        newMoney.coordinates = newMoneyCoordinates;
-                        world.entities.put(newMoneyCoordinates, newMoney);
-                        counter++;
+                            counter++;
+                        }
                     }
                 }
             }
