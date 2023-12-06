@@ -4,18 +4,18 @@ import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.RouteFinder;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public abstract class Person extends Entity {
     private int speed;
     private int hp;
-    public RouteFinder routeFinder;
+    private int hpRequiredForMove;
+    public RouteFinder routeFinder = new RouteFinder();
 
-    public Person(int speed, int hp) {
+    public Person(int speed, int hp, int hpRequiredForMove) {
         this.speed = speed;
         this.hp = hp;
+        this.hpRequiredForMove = hpRequiredForMove;
     }
 
     public int getHP() {
@@ -26,21 +26,32 @@ public abstract class Person extends Entity {
         this.hp += hp;
     }
 
-    void makeMove(World world) {
-        Stack<Coordinates> route = routeFinder.findRoute(world, this.coordinates);
-        List<Coordinates> nextStepsList = new ArrayList<>();
-        for (int step = 0; step < this.speed; step++) {
-            nextStepsList.add(route.peek());
-        }
-        Coordinates nextStep = nextStepsList.get(nextStepsList.size() - 1);
+    public void makeMove(World world) {
+        List<Coordinates> route = routeFinder.findRoute(world, this.coordinates);
+        int nextStepRow = -1;
+        int nextStepColumn = -1;
 
-        if (!world.isCellEmpty(nextStep) && this.getTargetClass().equals(world.entities.get(nextStep).getClass())) {
-            attack(world, nextStep);
-        } else {
+        if (route.size() > 1) {
+            route.remove(0);
+
+            int limit = Math.min(route.size(), this.speed);
+            for (int step = 0; step < limit; step++) {
+                nextStepRow = route.get(route.size() - 1 - step).row;
+                nextStepColumn = route.get(route.size() - 1 - step).column;
+            }
+
+            Coordinates nextStep = new Coordinates(nextStepRow, nextStepColumn);
             world.entities.put(nextStep, this);
             world.entities.remove(this.coordinates);
             this.coordinates = nextStep;
+
+        } else if (!route.isEmpty()){
+            nextStepRow = route.get(0).row;
+            nextStepColumn = route.get(0).column;
+            attack(world, new Coordinates(nextStepRow, nextStepColumn));
         }
+
+        this.hp -= this.hpRequiredForMove;
     }
 
     abstract void attack(World world, Coordinates nextStep);

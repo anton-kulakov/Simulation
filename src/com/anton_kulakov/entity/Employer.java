@@ -5,8 +5,8 @@ import com.anton_kulakov.World;
 
 public class Employer extends Person {
 
-    public Employer(int speed, int hp) {
-        super(speed, hp);
+    public Employer(int speed, int hp, int hpRequiredForMove) {
+        super(speed, hp, hpRequiredForMove);
     }
 
     @Override

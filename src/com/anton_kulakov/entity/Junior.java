@@ -6,8 +6,8 @@ import com.anton_kulakov.World;
 public class Junior extends Person {
     private int powerOfAttack;
 
-    public Junior(int speed, int hp, int powerOfAttack) {
-        super(speed, hp);
+    public Junior(int speed, int hp, int hpRequiredForMove, int powerOfAttack) {
+        super(speed, hp, hpRequiredForMove);
         this.powerOfAttack = powerOfAttack;
     }
 
@@ -15,10 +15,6 @@ public class Junior extends Person {
     void attack(World world, Coordinates targetCoordinates) {
         Employer targetEmployer = (Employer) world.entities.get(targetCoordinates);
         targetEmployer.changeHP(-powerOfAttack);
-
-        if (targetEmployer.getHP() <= 0) {
-            world.entities.remove(targetCoordinates);
-        }
     }
 
     @Override

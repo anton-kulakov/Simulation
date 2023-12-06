@@ -3,12 +3,9 @@ package com.anton_kulakov.entity;
 import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 
-import java.util.Iterator;
-import java.util.Set;
-
 public class ProgrammingSchool extends Person {
-    public ProgrammingSchool(int speed, int hp) {
-        super(speed, hp);
+    public ProgrammingSchool(int speed, int hp, int hpRequiredForMove) {
+        super(speed, hp, hpRequiredForMove);
     }
 
     @Override
@@ -22,12 +19,13 @@ public class ProgrammingSchool extends Person {
     }
 
     private void createNewJunior(World world) {
-        Set<Coordinates> neighboringCells = routeFinder.getNeighboringCells(world, this.coordinates);
-        Iterator<Coordinates> iterator = neighboringCells.iterator();
+        Coordinates coordinatesForNewJunior = routeFinder.getNeighboringCell(world, this.coordinates);
 
-        Coordinates coordinatesForNewJunior = iterator.next();
-        world.entities.put(coordinatesForNewJunior, new Junior(3, 20, 3));
-        world.entities.get(coordinatesForNewJunior).coordinates = coordinatesForNewJunior;
+        if (coordinatesForNewJunior != null) {
+            Junior newJunior = new Junior(3, 20, 2, 3);
+            newJunior.coordinates = coordinatesForNewJunior;
+            world.entities.put(newJunior.coordinates, newJunior);
+        }
     }
 
     @Override
