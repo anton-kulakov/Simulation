@@ -1,30 +1,47 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.action.*;
+
+import java.io.IOException;
 import java.util.List;
 
 public class Simulation {
     private World world = new World();
     private int turnsCounter = 0;
-    private WorldConsoleRenderer renderer;
+    private WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     private final List<Action> initActions = List.of(
             new SetupDefaultWorldAction(),
             new PrintStartInfoAction()
     );
     private final List<Action> turnActions = List.of(
             new MakeMoveAction(),
+            new RemovePersonsWithoutHP(),
             new AddMoneyAction()
     );
 
-    private void nextTurn() {
-        // просимулировать и отрендерить один ход
-    }
-
-    private void startSimulation() {
+    public void startSimulation() {
         // запустить бесконечный цикл симуляции и рендеринга
+        for (Action action : initActions) {
+            action.doAction(world);
+        }
+
+        renderer.render(world);
+    }
+    public void nextTurn() throws IOException, InterruptedException {
+        // просимулировать и отрендерить один ход
+        for (Action action : turnActions) {
+            action.doAction(world);
+        }
+
+        renderer.render(world);
+
+        turnsCounter++;
     }
 
-    private void pauseSimulation() {
-        // приостановить бесконечный цикл симуляции и рендеринга
-    }
+//    public void pauseSimulation() {
+//        // приостановить бесконечный цикл симуляции и рендеринга
+//        Thread.onSpinWait();
+//        // 23-11-2023 остановился здесь. Нужно понять, как поставить выполнение программы на паузу
+//        // в частности, нужно прочитать про метод onSpinWait(). Возможно он поможет
+//    }
 }
