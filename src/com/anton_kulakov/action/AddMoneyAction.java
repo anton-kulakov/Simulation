@@ -7,8 +7,6 @@ import com.anton_kulakov.entity.Entity;
 import com.anton_kulakov.entity.Money;
 import com.anton_kulakov.entity.ProgrammingSchool;
 
-import java.util.Optional;
-
 public class AddMoneyAction extends Action {
     public void doAction(World world) {
         int moneyCounter = 0;
@@ -24,11 +22,11 @@ public class AddMoneyAction extends Action {
                 for (Entity entity : world.entities.values()) {
                     if (entity instanceof ProgrammingSchool) {
                         RouteFinder routeFinder = new RouteFinder();
-                        Optional<Coordinates> newMoneyCoordinates = routeFinder.getNeighboringCell(world, entity.coordinates);
+                        Coordinates newMoneyCoordinates = routeFinder.getNeighboringCell(world, entity.coordinates);
 
-                        if (newMoneyCoordinates.isPresent()) {
+                        if (newMoneyCoordinates != Coordinates.EMPTY) {
                             Money newMoney = new Money();
-                            newMoney.coordinates = newMoneyCoordinates.get();
+                            newMoney.coordinates = newMoneyCoordinates;
                             world.entities.put(newMoney.coordinates, newMoney);
 
                             counter++;

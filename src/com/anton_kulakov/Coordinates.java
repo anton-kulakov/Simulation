@@ -4,6 +4,7 @@ import com.anton_kulakov.entity.Entity;
 import java.util.Objects;
 
 public class Coordinates {
+    public static final Coordinates EMPTY = new Coordinates(100, 100);
     public final Integer row;
     public final Integer column;
     public Coordinates parent;

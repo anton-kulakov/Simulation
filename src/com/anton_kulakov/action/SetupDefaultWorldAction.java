@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SetupDefaultWorldAction extends Action {
-    private static final int MAX_ENTITIES_ON_START = 48;
+    private static final int MAX_ENTITIES_ON_START = 24;
     private static final int NUMBER_OF_TYPES_OF_ENTITIES = 6;
     public void doAction(World world) {
         List<Entity> entityList = new ArrayList<>();
@@ -16,9 +16,9 @@ public class SetupDefaultWorldAction extends Action {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());
-            entityList.add(new ProgrammingSchool(4, 10, 1));
-            entityList.add(new Employer(2, 40, 3));
-            entityList.add(new Junior(3, 20, 2, 3));
+            entityList.add(new ProgrammingSchool(4, 7, 1));
+            entityList.add(new Employer(2, 10, 3));
+            entityList.add(new Junior(3, 5, 2, 3));
         }
 
         int i = MAX_ENTITIES_ON_START - 1;

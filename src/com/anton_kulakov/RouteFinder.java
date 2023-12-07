@@ -6,11 +6,12 @@ import java.util.*;
 import static com.anton_kulakov.action.Action.random;
 
 public class RouteFinder {
-    private Set<Coordinates> openSet = new HashSet<>();
-    private Set<Coordinates> closedSet = new HashSet<>();
-    private ArrayList<Coordinates> route = new ArrayList<>();
-
     public List<Coordinates> findRoute(World world, Coordinates startCoordinates) {
+        Set<Coordinates> openSet = new HashSet<>();
+        Set<Coordinates> closedSet = new HashSet<>();
+        ArrayList<Coordinates> route = new ArrayList<>();
+
+        // Здесь нужно проверить. Метод findTarget может вернуть Coordinates.EMPTY
         Coordinates targetCoordinates = findTarget(world, startCoordinates);
         int rowDifference = targetCoordinates.row - startCoordinates.row;
         int columnDifference = targetCoordinates.column - startCoordinates.column;
@@ -19,21 +20,16 @@ public class RouteFinder {
             route.add(targetCoordinates);
         } else {
             Coordinates previousCoordinates = startCoordinates;
-            Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, startCoordinates, targetCoordinates);
+            Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, startCoordinates, targetCoordinates, openSet, closedSet);
 
             if (neighboringCells.size() > 0) {
                 while (!Objects.equals(previousCoordinates, targetCoordinates)) {
-                    openSet.addAll(getNeighboringCellsForRoute(world, previousCoordinates, targetCoordinates));
+                    openSet.addAll(getNeighboringCellsForRoute(world, previousCoordinates, targetCoordinates, openSet, closedSet));
                     closedSet.add(previousCoordinates);
 
-                    calculateFGHValues(previousCoordinates, targetCoordinates);
-                    Optional<Coordinates> previousCoordinatesOptional = getNewPreviousCoordinates();
-
-                    if (previousCoordinatesOptional.isPresent()) {
-                        previousCoordinates = previousCoordinatesOptional.get();
-                    } else {
-                        break;
-                    }
+                    calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
+                    // Здесь нужно проверить. Метод getNewPreviousCoordinates может вернуть Coordinates.EMPTY
+                    previousCoordinates= getNewPreviousCoordinates(openSet, closedSet);
                 }
 
                 if (openSet.contains(targetCoordinates)) {
@@ -58,7 +54,7 @@ public class RouteFinder {
                (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 0);
     }
 
-    public Set<Coordinates> getNeighboringCellsForRoute(World world, Coordinates previousCoordinates, Coordinates targetCoordinates) {
+    public Set<Coordinates> getNeighboringCellsForRoute(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column));
@@ -72,7 +68,7 @@ public class RouteFinder {
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column - 1));
 
         neighboringCells.removeIf(cell -> !cell.equals(targetCoordinates) && !cell.isPassable(world));
-        neighboringCells.removeIf(cell -> closedSet.contains(cell));
+        neighboringCells.removeIf(closedSet::contains);
 
         for (Coordinates cell : neighboringCells) {
             if (!openSet.contains(cell)) {
@@ -83,7 +79,7 @@ public class RouteFinder {
         return neighboringCells;
     }
 
-    public Optional<Coordinates> getNeighboringCell(World world, Coordinates coordinates) {
+    public Coordinates getNeighboringCell(World world, Coordinates coordinates) {
         List<Coordinates> neighboringCells = new ArrayList<>();
 
         neighboringCells.add(new Coordinates(coordinates.row + 1, coordinates.column));
@@ -99,22 +95,21 @@ public class RouteFinder {
         neighboringCells.removeIf(cell -> !cell.isPassable(world));
 
         int randomCell = 0;
-        Optional<Coordinates> neighboringCell = Optional.empty();
+        Coordinates neighboringCell = Coordinates.EMPTY;
         if (neighboringCells.size() > 0) {
             randomCell = random.nextInt(neighboringCells.size());
-            neighboringCell = Optional.of(neighboringCells.get(randomCell));
+            neighboringCell = neighboringCells.get(randomCell);
         }
 
         return neighboringCell;
     }
 
     private Coordinates findTarget(World world, Coordinates startCoordinates) {
+        Coordinates target = Coordinates.EMPTY;
         Person person = (Person) world.getEntity(startCoordinates);
         Class<? extends Entity> targetClass = person.getTargetClass();
         int minDistance = 100;
         int distanceFromAtoB;
-
-        Optional<Coordinates> target = Optional.empty();
 
         for (Entity entity : world.entities.values()) {
             if (entity.getClass().equals(targetClass)) {
@@ -124,15 +119,16 @@ public class RouteFinder {
                 );
 
                 if (distanceFromAtoB < minDistance) {
-                    target = Optional.of(entity.coordinates);
+                    target = entity.coordinates;
                     minDistance = distanceFromAtoB;
                 }
             }
         }
-        return target.get();
+
+        return target;
     }
 
-    private void calculateFGHValues(Coordinates previousCoordinates, Coordinates targetCoordinates) {
+    private void calculateFGHValues(Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet) {
         int potentialGValue;
 
         for (Coordinates coordinates : openSet) {
@@ -140,7 +136,6 @@ public class RouteFinder {
                 coordinates.HValue = 10 * (Math.abs(targetCoordinates.row - coordinates.row) + Math.abs(targetCoordinates.column - coordinates.column));
             }
 
-            // Выскакивает НаллПоинтер - Cannot read field "row" because "coordinates.parent" is null
             if (Objects.equals(coordinates.row, coordinates.parent.row) || Objects.equals(coordinates.column, coordinates.parent.column)) {
                 potentialGValue = coordinates.parent.GValue + 10;
             } else {
@@ -156,14 +151,14 @@ public class RouteFinder {
         }
     }
 
-    private Optional<Coordinates> getNewPreviousCoordinates() {
+    private Coordinates getNewPreviousCoordinates(Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         int minFValue = 100;
-        Optional<Coordinates> newPreviousCoordinates = Optional.empty();
+        Coordinates newPreviousCoordinates = Coordinates.EMPTY;
 
         for (Coordinates coordinates : openSet) {
             if (coordinates.FValue < minFValue && !closedSet.contains(coordinates)) {
                 minFValue = coordinates.FValue;
-                newPreviousCoordinates = Optional.of(coordinates);
+                newPreviousCoordinates = coordinates;
             }
         }
 

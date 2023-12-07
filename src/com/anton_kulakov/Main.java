@@ -8,7 +8,7 @@ public class Main {
                 simulation.startSimulation();
 
                 int counter = 0;
-                while (counter < 6) {
+                while (true) {
                         simulation.nextTurn();
 
                         counter++;

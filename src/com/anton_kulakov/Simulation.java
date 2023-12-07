@@ -20,7 +20,6 @@ public class Simulation {
     );
 
     public void startSimulation() {
-        // запустить бесконечный цикл симуляции и рендеринга
         for (Action action : initActions) {
             action.doAction(world);
         }
@@ -28,7 +27,6 @@ public class Simulation {
         renderer.render(world);
     }
     public void nextTurn() throws IOException, InterruptedException {
-        // просимулировать и отрендерить один ход
         for (Action action : turnActions) {
             action.doAction(world);
         }
