@@ -16,7 +16,7 @@ public class Simulation {
     private final List<Action> turnActions = List.of(
             new MakeMoveAction(),
             new RemovePersonsWithoutHP(),
-            new AddMoneyAction()
+            new AddEntitiesAction()
     );
 
     public void startSimulation() {

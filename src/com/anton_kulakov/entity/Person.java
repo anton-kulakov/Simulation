@@ -27,7 +27,7 @@ public abstract class Person extends Entity {
     }
 
     public void makeMove(World world) {
-        List<Coordinates> route = routeFinder.findRoute(world, this.coordinates);
+        List<Coordinates> route = routeFinder.getRoute(world, this.coordinates);
         int nextStepRow = -1;
         int nextStepColumn = -1;
 

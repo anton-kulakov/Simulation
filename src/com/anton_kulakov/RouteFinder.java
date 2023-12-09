@@ -6,45 +6,55 @@ import java.util.*;
 import static com.anton_kulakov.action.Action.random;
 
 public class RouteFinder {
-    public List<Coordinates> findRoute(World world, Coordinates startCoordinates) {
-        Set<Coordinates> openSet = new HashSet<>();
-        Set<Coordinates> closedSet = new HashSet<>();
+    public List<Coordinates> getRoute(World world, Coordinates startCoordinates) {
         ArrayList<Coordinates> route = new ArrayList<>();
-
-        // Здесь нужно проверить. Метод findTarget может вернуть Coordinates.EMPTY
         Coordinates targetCoordinates = findTarget(world, startCoordinates);
         int rowDifference = targetCoordinates.row - startCoordinates.row;
         int columnDifference = targetCoordinates.column - startCoordinates.column;
 
+        if (Coordinates.EMPTY.equals(targetCoordinates)) {
+            return route;
+        }
+
         if (ifTargetOnNextCell(rowDifference, columnDifference)) {
             route.add(targetCoordinates);
         } else {
-            Coordinates previousCoordinates = startCoordinates;
-            Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, startCoordinates, targetCoordinates, openSet, closedSet);
+            route.addAll(findRoute(world, startCoordinates, targetCoordinates, route));
+        }
 
-            if (neighboringCells.size() > 0) {
-                while (!Objects.equals(previousCoordinates, targetCoordinates)) {
-                    openSet.addAll(getNeighboringCellsForRoute(world, previousCoordinates, targetCoordinates, openSet, closedSet));
-                    closedSet.add(previousCoordinates);
+        route.remove(startCoordinates);
+        return route;
+    }
 
-                    calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
-                    // Здесь нужно проверить. Метод getNewPreviousCoordinates может вернуть Coordinates.EMPTY
-                    previousCoordinates= getNewPreviousCoordinates(openSet, closedSet);
+    public List<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates, ArrayList<Coordinates> route) {
+        Set<Coordinates> openSet = new HashSet<>();
+        Set<Coordinates> closedSet = new HashSet<>();
+        Coordinates previousCoordinates = startCoordinates;
+        Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, startCoordinates, targetCoordinates, openSet, closedSet);
+
+        if (neighboringCells.size() > 0) {
+            while (!Objects.equals(previousCoordinates, targetCoordinates)) {
+                openSet.addAll(getNeighboringCellsForRoute(world, previousCoordinates, targetCoordinates, openSet, closedSet));
+                closedSet.add(previousCoordinates);
+
+                calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
+                previousCoordinates = getNewPreviousCoordinates(openSet, closedSet);
+                if (Coordinates.EMPTY.equals(previousCoordinates)) {
+                    break;
                 }
+            }
 
-                if (openSet.contains(targetCoordinates)) {
-                    targetCoordinates.parent = previousCoordinates;
-                    Coordinates elementOfRoute = targetCoordinates;
+            if (openSet.contains(targetCoordinates)) {
+                targetCoordinates.parent = previousCoordinates;
+                Coordinates elementOfRoute = targetCoordinates;
 
-                    while (!Objects.equals(elementOfRoute, startCoordinates)) {
-                        elementOfRoute = elementOfRoute.parent;
-                        route.add(elementOfRoute);
-                    }
+                while (!Objects.equals(elementOfRoute, startCoordinates)) {
+                    elementOfRoute = elementOfRoute.parent;
+                    route.add(elementOfRoute);
                 }
             }
         }
 
-        route.remove(startCoordinates);
         return route;
     }
 
