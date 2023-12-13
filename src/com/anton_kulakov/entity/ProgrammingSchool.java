@@ -26,7 +26,7 @@ public class ProgrammingSchool extends Person {
         }
 
         if (coordinatesForNewJunior != Coordinates.EMPTY) {
-            Junior newJunior = new Junior(1, 8, 2, 3);
+            Junior newJunior = new Junior(1, 8, 2, true,3);
             newJunior.coordinates = coordinatesForNewJunior;
             copyWorld.entities.put(newJunior.coordinates, newJunior);
         }

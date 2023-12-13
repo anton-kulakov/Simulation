@@ -12,10 +12,11 @@ public abstract class Person extends Entity {
     private final int hpRequiredForMove;
     public RouteFinder routeFinder = new RouteFinder();
 
-    public Person(int speed, int hp, int hpRequiredForMove) {
+    public Person(int speed, int hp, int hpRequiredForMove, boolean canBeAttacked) {
         this.speed = speed;
         this.hp = hp;
         this.hpRequiredForMove = hpRequiredForMove;
+        this.canBeAttacked = canBeAttacked;
     }
 
     public int getHP() {
@@ -40,6 +41,11 @@ public abstract class Person extends Entity {
             this.hp -= this.hpRequiredForMove;
         } else if (targetCoordinates != Coordinates.EMPTY){
             attack(world, copyWorld, targetCoordinates);
+            copyWorld.entities.put(this.coordinates, this);
+        }
+
+        if (this.getHP() <= 0) {
+            copyWorld.entities.remove(this.coordinates);
         }
     }
 
@@ -54,10 +60,10 @@ public abstract class Person extends Entity {
             if (entity.getClass().equals(targetClass)) {
                 distanceFromAtoB = (int) Math.sqrt(
                         Math.pow((entity.coordinates.row - startCoordinates.row), 2) +
-                                Math.pow((entity.coordinates.column - startCoordinates.column), 2)
+                        Math.pow((entity.coordinates.column - startCoordinates.column), 2)
                 );
 
-                if (distanceFromAtoB < minDistance) {
+                if (distanceFromAtoB < minDistance && entity.canBeAttacked) {
                     target = entity.coordinates;
                     minDistance = distanceFromAtoB;
                 }
@@ -67,8 +73,7 @@ public abstract class Person extends Entity {
         return target;
     }
 
-
-    abstract void attack(World world, World copeWorld, Coordinates nextStep);
+    abstract void attack(World world, World copyWorld, Coordinates nextStep);
 
     public abstract Class<? extends Entity> getTargetClass();
 }

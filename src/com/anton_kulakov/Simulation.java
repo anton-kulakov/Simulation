@@ -9,17 +9,17 @@ public class Simulation {
     private int turnsCounter = 0;
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     private final List<Action> initActions = List.of(
-            new SetupDefaultWorldAction(),
-            new PrintStartInfoAction()
+            new SetupDefaultWorld(),
+            new PrintStartInfo()
     );
     private final List<Action> turnActions = List.of(
-            new MakeMoveAction(),
-            new RemovePersonsWithoutHP(),
-            new AdjustCurrentWorldStateAction(),
-            new AddEntitiesAction()
+            new PutTreesAndHousesToCopyWorld(),
+            new MakeMove(),
+            new AddEntities()
     );
 
     public void startSimulation() {
+
         for (Action action : initActions) {
             action.doAction(world, copyWorld);
         }

@@ -4,4 +4,5 @@ import com.anton_kulakov.Coordinates;
 
 abstract public class Entity {
     public Coordinates coordinates;
+    public boolean canBeAttacked;
 }

@@ -43,11 +43,11 @@ public class World {
                 };
 
                 switch (entityClass) {
-                    case "Money" -> newEntity = new Money();
+                    case "Money" -> newEntity = new Money(true);
 
-                    case "Employer" -> newEntity = new Employer(1, 10, 3);
+                    case "Employer" -> newEntity = new Employer(1, 10, 3, true);
 
-                    case "Junior" -> newEntity = new Junior(1, 8, 2, 3);
+                    case "Junior" -> newEntity = new Junior(1, 8, 2, true, 3);
 
                     case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 7, 1);
                 }

@@ -4,7 +4,8 @@ import com.anton_kulakov.World;
 import com.anton_kulakov.entity.*;
 import java.util.HashMap;
 import java.util.Map;
-public class AddEntitiesAction extends Action {
+
+public class AddEntities extends Action {
     public void doAction(World world, World copyWorld) {
         HashMap<String, Integer> sumOfEntities = countEntities(world);
 
