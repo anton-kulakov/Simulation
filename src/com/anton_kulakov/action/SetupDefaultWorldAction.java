@@ -9,16 +9,16 @@ import java.util.List;
 public class SetupDefaultWorldAction extends Action {
     private static final int MAX_ENTITIES_ON_START = 24;
     private static final int NUMBER_OF_TYPES_OF_ENTITIES = 6;
-    public void doAction(World world) {
+    public void doAction(World world, World copyWorld) {
         List<Entity> entityList = new ArrayList<>();
         int max = MAX_ENTITIES_ON_START / NUMBER_OF_TYPES_OF_ENTITIES;
         for (int j = 0; j < max; j++) {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());
-            entityList.add(new ProgrammingSchool(4, 7, 1));
-            entityList.add(new Employer(2, 10, 3));
-            entityList.add(new Junior(3, 5, 2, 3));
+            entityList.add(new ProgrammingSchool(1, 7, 1));
+            entityList.add(new Employer(1, 10, 3));
+            entityList.add(new Junior(1, 8, 2, 3));
         }
 
         int i = MAX_ENTITIES_ON_START - 1;

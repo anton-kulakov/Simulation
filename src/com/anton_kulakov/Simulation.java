@@ -1,14 +1,13 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.action.*;
-
-import java.io.IOException;
 import java.util.List;
 
 public class Simulation {
-    private World world = new World();
+    private final World world = new World();
+    private final World copyWorld = new World();
     private int turnsCounter = 0;
-    private WorldConsoleRenderer renderer = new WorldConsoleRenderer();
+    private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     private final List<Action> initActions = List.of(
             new SetupDefaultWorldAction(),
             new PrintStartInfoAction()
@@ -16,19 +15,20 @@ public class Simulation {
     private final List<Action> turnActions = List.of(
             new MakeMoveAction(),
             new RemovePersonsWithoutHP(),
+            new AdjustCurrentWorldStateAction(),
             new AddEntitiesAction()
     );
 
     public void startSimulation() {
         for (Action action : initActions) {
-            action.doAction(world);
+            action.doAction(world, copyWorld);
         }
 
         renderer.render(world);
     }
-    public void nextTurn() throws IOException, InterruptedException {
+    public void nextTurn() {
         for (Action action : turnActions) {
-            action.doAction(world);
+            action.doAction(world, copyWorld);
         }
 
         renderer.render(world);

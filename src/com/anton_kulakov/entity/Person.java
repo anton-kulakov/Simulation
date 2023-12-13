@@ -4,12 +4,12 @@ import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.RouteFinder;
 
-import java.util.List;
+import java.util.*;
 
 public abstract class Person extends Entity {
-    private int speed;
+    private final int speed;
     private int hp;
-    private int hpRequiredForMove;
+    private final int hpRequiredForMove;
     public RouteFinder routeFinder = new RouteFinder();
 
     public Person(int speed, int hp, int hpRequiredForMove) {
@@ -26,34 +26,49 @@ public abstract class Person extends Entity {
         this.hp += hp;
     }
 
-    public void makeMove(World world) {
-        List<Coordinates> route = routeFinder.getRoute(world, this.coordinates);
-        int nextStepRow = -1;
-        int nextStepColumn = -1;
+    public void makeMove(World world, World copyWorld) {
+        Coordinates targetCoordinates = findTarget(world, this.coordinates);
+        List<Coordinates> route = routeFinder.getRoute(world, copyWorld, this.coordinates, targetCoordinates);
 
-        if (route.size() > 1) {
-            route.remove(0);
-
+        if (!route.isEmpty()) {
             int limit = Math.min(route.size(), this.speed);
-            for (int step = 0; step < limit; step++) {
-                nextStepRow = route.get(route.size() - 1 - step).row;
-                nextStepColumn = route.get(route.size() - 1 - step).column;
-            }
+            Coordinates nextStep = route.get(limit - 1);
 
-            Coordinates nextStep = new Coordinates(nextStepRow, nextStepColumn);
-            world.entities.put(nextStep, this);
-            world.entities.remove(this.coordinates);
+            copyWorld.entities.put(nextStep, this);
             this.coordinates = nextStep;
 
             this.hp -= this.hpRequiredForMove;
-        } else if (!route.isEmpty()){
-            nextStepRow = route.get(0).row;
-            nextStepColumn = route.get(0).column;
-            attack(world, new Coordinates(nextStepRow, nextStepColumn));
+        } else if (targetCoordinates != Coordinates.EMPTY){
+            attack(world, copyWorld, targetCoordinates);
         }
     }
 
-    abstract void attack(World world, Coordinates nextStep);
+    public Coordinates findTarget(World world, Coordinates startCoordinates) {
+        Coordinates target = Coordinates.EMPTY;
+        Person person = (Person) world.getEntity(startCoordinates);
+        Class<? extends Entity> targetClass = person.getTargetClass();
+        int minDistance = 100;
+        int distanceFromAtoB;
+
+        for (Entity entity : world.entities.values()) {
+            if (entity.getClass().equals(targetClass)) {
+                distanceFromAtoB = (int) Math.sqrt(
+                        Math.pow((entity.coordinates.row - startCoordinates.row), 2) +
+                                Math.pow((entity.coordinates.column - startCoordinates.column), 2)
+                );
+
+                if (distanceFromAtoB < minDistance) {
+                    target = entity.coordinates;
+                    minDistance = distanceFromAtoB;
+                }
+            }
+        }
+
+        return target;
+    }
+
+
+    abstract void attack(World world, World copeWorld, Coordinates nextStep);
 
     public abstract Class<? extends Entity> getTargetClass();
 }

@@ -1,15 +1,26 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.entity.*;
-import java.util.concurrent.ConcurrentHashMap;
+
+import java.util.HashMap;
+import java.util.Objects;
+
 import static com.anton_kulakov.action.Action.random;
 
 public class World {
-    public ConcurrentHashMap<Coordinates, Entity> entities = new ConcurrentHashMap<>();
+    public HashMap<Coordinates, Entity> entities = new HashMap<>();
 
     public boolean isCellEmpty(int row, int column) {
-        for (Coordinates coordinates : entities.keySet()) {
-            if (coordinates.row == row && coordinates.column == column) {
+        for (Coordinates coordinateInWorld : entities.keySet()) {
+            if (coordinateInWorld.row == row && coordinateInWorld.column == column) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean isCellEmpty(Coordinates coordinates) {
+        for (Coordinates coordinateInWorld : entities.keySet()) {
+            if (Objects.equals(coordinateInWorld.row, coordinates.row) && Objects.equals(coordinateInWorld.column, coordinates.column)) {
                 return false;
             }
         }
@@ -34,26 +45,27 @@ public class World {
                 switch (entityClass) {
                     case "Money" -> newEntity = new Money();
 
-                    case "Employer" -> newEntity = new Employer(2, 10, 3);
+                    case "Employer" -> newEntity = new Employer(1, 10, 3);
 
-                    case "Junior" -> newEntity = new Junior(3, 5, 2, 3);
+                    case "Junior" -> newEntity = new Junior(1, 8, 2, 3);
 
-                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(4, 7, 1);
+                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 7, 1);
                 }
+
                 newEntity.coordinates = newEntityCoordinates;
                 this.entities.put(newEntity.coordinates, newEntity);
-
-
             }
 
             newEntityCounter++;
         }
     }
 
-    private Coordinates getNewEntityCoordinates() {
+    public Coordinates getNewEntityCoordinates() {
         Coordinates newEntityCoordinates = Coordinates.EMPTY;
 
-        while (this.entities.containsKey(newEntityCoordinates) || Coordinates.EMPTY.equals(newEntityCoordinates)) {
+        while (!this.isCellEmpty(newEntityCoordinates) ||
+               Coordinates.EMPTY.equals(newEntityCoordinates)
+        ) {
             int row = random.nextInt(10);
             int column = random.nextInt(10);
             newEntityCoordinates = new Coordinates(row, column);

@@ -10,7 +10,7 @@ public class Employer extends Person {
     }
 
     @Override
-     void attack(World world, Coordinates targetCoordinates) {
+     void attack(World world, World copyWorld, Coordinates targetCoordinates) {
         world.entities.remove(targetCoordinates);
         this.changeHP(5);
     }

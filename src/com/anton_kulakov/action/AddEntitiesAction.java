@@ -6,7 +6,7 @@ import com.anton_kulakov.entity.*;
 import java.util.HashMap;
 import java.util.Map;
 public class AddEntitiesAction extends Action {
-    public void doAction(World world) {
+    public void doAction(World world, World copyWorld) {
         HashMap<String, Integer> sumOfEntities = countEntities(world);
 
         for (Map.Entry<String, Integer> entityAmount : sumOfEntities.entrySet()) {

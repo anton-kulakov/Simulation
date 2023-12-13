@@ -12,7 +12,7 @@ public class Junior extends Person {
     }
 
     @Override
-    void attack(World world, Coordinates targetCoordinates) {
+    void attack(World world, World copyWorld, Coordinates targetCoordinates) {
         Employer targetEmployer = (Employer) world.entities.get(targetCoordinates);
         targetEmployer.changeHP(-powerOfAttack);
     }
