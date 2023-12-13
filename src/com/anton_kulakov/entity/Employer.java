@@ -11,7 +11,12 @@ public class Employer extends Person {
 
     @Override
      void attack(World world, World copyWorld, Coordinates targetCoordinates) {
-        world.entities.remove(targetCoordinates);
+        Entity target = world.entities.get(targetCoordinates);
+
+        if (target instanceof Money) {
+            ((Money) target).setSpent(true);
+        }
+
         this.changeHP(5);
     }
 

@@ -12,6 +12,7 @@ public class RemovePersonsWithoutHP extends Action {
         Iterator<Entity> iterator = copyWorld.entities.values().iterator();
         while (iterator.hasNext()) {
             Entity entity = iterator.next();
+
             if (entity instanceof Person && ((Person) entity).getHP() <= 0) {
                 iterator.remove();
             }

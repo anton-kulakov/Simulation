@@ -9,6 +9,7 @@ public class MakeMoveAction extends Action {
         Iterator<Entity> iterator = world.entities.values().iterator();
         while (iterator.hasNext()) {
             Entity entity = iterator.next();
+
             if (entity instanceof Person) {
                 ((Person) entity).makeMove(world, copyWorld);
             }
