@@ -12,11 +12,10 @@ public abstract class Person extends Entity {
     private final int hpRequiredForMove;
     public RouteFinder routeFinder = new RouteFinder();
 
-    public Person(int speed, int hp, int hpRequiredForMove, boolean isDead) {
+    public Person(int speed, int hp, int hpRequiredForMove) {
         this.speed = speed;
         this.hp = hp;
         this.hpRequiredForMove = hpRequiredForMove;
-        this.isDead = isDead;
     }
 
     public int getHP() {
@@ -63,7 +62,7 @@ public abstract class Person extends Entity {
                         Math.pow((entity.coordinates.column - startCoordinates.column), 2)
                 );
 
-                if (distanceFromAtoB < minDistance && entity.isDead) {
+                if (distanceFromAtoB < minDistance && entity.coordinates != Coordinates.EMPTY) {
                     target = entity.coordinates;
                     minDistance = distanceFromAtoB;
                 }

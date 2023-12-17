@@ -15,10 +15,10 @@ public class SetupDefaultWorld extends Action {
         for (int j = 0; j < max; j++) {
             entityList.add(new House());
             entityList.add(new Tree());
-            entityList.add(new Money(false));
-            entityList.add(new ProgrammingSchool(1, 7, 1, false));
-            entityList.add(new Employer(1, 10, 3, false));
-            entityList.add(new Junior(1, 8, 2, false, 3));
+            entityList.add(new Money());
+            entityList.add(new ProgrammingSchool(1, 7, 1));
+            entityList.add(new Employer(1, 10, 3));
+            entityList.add(new Junior(1, 8, 2, 3));
         }
 
         int i = MAX_ENTITIES_ON_START - 1;

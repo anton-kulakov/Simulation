@@ -4,8 +4,8 @@ import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 
 public class ProgrammingSchool extends Person {
-    public ProgrammingSchool(int speed, int hp, int hpRequiredForMove, boolean isDead) {
-        super(speed, hp, hpRequiredForMove, isDead);
+    public ProgrammingSchool(int speed, int hp, int hpRequiredForMove) {
+        super(speed, hp, hpRequiredForMove);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ProgrammingSchool extends Person {
         }
 
         if (coordinatesForNewJunior != Coordinates.EMPTY) {
-            Junior newJunior = new Junior(1, 8, 2, false,3);
+            Junior newJunior = new Junior(1, 8, 2,3);
             newJunior.coordinates = coordinatesForNewJunior;
             copyWorld.entities.put(newJunior.coordinates, newJunior);
         }
