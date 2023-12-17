@@ -79,7 +79,7 @@ public class RouteFinder {
         neighboringCells.add(new Coordinates(previousCoordinates.row, previousCoordinates.column - 1));
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column - 1));
 
-        neighboringCells.removeIf(cell -> !cell.equals(targetCoordinates) && (world.isCellEmpty(cell) || copyWorld.isCellEmpty(cell)));
+        neighboringCells.removeIf(cell -> !cell.equals(targetCoordinates) && !cell.isPassable(world));
         neighboringCells.removeIf(closedSet::contains);
 
         for (Coordinates cell : neighboringCells) {

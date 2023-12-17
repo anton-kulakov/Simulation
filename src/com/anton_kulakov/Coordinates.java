@@ -1,5 +1,9 @@
 package com.anton_kulakov;
 
+import com.anton_kulakov.entity.Entity;
+
+import java.util.Objects;
+
 public class Coordinates {
     public static final Coordinates EMPTY = new Coordinates(100, 100);
     public final Integer row;
@@ -12,6 +16,17 @@ public class Coordinates {
     public Coordinates(Integer row, Integer column) {
         this.row = row;
         this.column = column;
+    }
+
+    public boolean isPassable(World world) {
+        for (Entity entity : world.entities.values()) {
+            if (
+                    (Objects.equals(entity.coordinates.row, this.row) && Objects.equals(entity.coordinates.column, this.column) ||
+                            (this.row < 0 || this.row > 9) ||
+                            (this.column < 0 || this.column > 9)
+                    )) { return false; }
+        }
+        return true;
     }
 
     @Override

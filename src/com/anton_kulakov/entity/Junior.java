@@ -6,8 +6,8 @@ import com.anton_kulakov.World;
 public class Junior extends Person {
     private int powerOfAttack;
 
-    public Junior(int speed, int hp, int hpRequiredForMove, boolean canBeAttacked, int powerOfAttack) {
-        super(speed, hp, hpRequiredForMove, canBeAttacked);
+    public Junior(int speed, int hp, int hpRequiredForMove, boolean isDead, int powerOfAttack) {
+        super(speed, hp, hpRequiredForMove, isDead);
         this.powerOfAttack = powerOfAttack;
     }
 
