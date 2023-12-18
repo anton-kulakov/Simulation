@@ -26,25 +26,22 @@ public abstract class Person extends Entity {
         this.hp += hp;
     }
 
-    public void makeMove(World world, World copyWorld) {
+    public void makeMove(World world) {
         Coordinates targetCoordinates = findTarget(world, this.coordinates);
-        List<Coordinates> route = routeFinder.getRoute(world, copyWorld, this.coordinates, targetCoordinates);
+        Entity targetEntity = world.entities.get(targetCoordinates);
+        List<Coordinates> route = routeFinder.getRoute(world, this.coordinates, targetCoordinates);
 
         if (!route.isEmpty()) {
             int limit = Math.min(route.size(), this.speed);
-            Coordinates nextStep = route.get(limit - 1);
-
-            copyWorld.entities.put(nextStep, this);
-            this.coordinates = nextStep;
+            this.coordinates = route.get(limit - 1);
 
             this.hp -= this.hpRequiredForMove;
         } else if (targetCoordinates != Coordinates.EMPTY){
-            attack(world, copyWorld, targetCoordinates);
-            copyWorld.entities.put(this.coordinates, this);
+            attack(targetEntity);
         }
 
         if (this.getHP() <= 0) {
-            copyWorld.entities.remove(this.coordinates);
+            this.coordinates = Coordinates.EMPTY;
         }
     }
 
@@ -72,7 +69,7 @@ public abstract class Person extends Entity {
         return target;
     }
 
-    abstract void attack(World world, World copyWorld, Coordinates nextStep);
+    abstract void attack(Entity targetEntity);
 
     public abstract Class<? extends Entity> getTargetClass();
 }

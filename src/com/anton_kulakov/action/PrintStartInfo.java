@@ -4,7 +4,7 @@ import com.anton_kulakov.World;
 
 public class PrintStartInfo extends Action {
     @Override
-    public void doAction(World world, World copyWorld) {
+    public void doAction(World world) {
         System.out.println();
         System.out.println(
                 """

@@ -9,7 +9,8 @@ import java.util.List;
 public class SetupDefaultWorld extends Action {
     private static final int MAX_ENTITIES_ON_START = 24;
     private static final int NUMBER_OF_TYPES_OF_ENTITIES = 6;
-    public void doAction(World world, World copyWorld) {
+
+    public void doAction(World world) {
         List<Entity> entityList = new ArrayList<>();
         int max = MAX_ENTITIES_ON_START / NUMBER_OF_TYPES_OF_ENTITIES;
         for (int j = 0; j < max; j++) {

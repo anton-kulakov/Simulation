@@ -3,7 +3,7 @@ package com.anton_kulakov;
 import java.util.*;
 
 public class RouteFinder {
-    public List<Coordinates> getRoute(World world, World copyWorld, Coordinates startCoordinates, Coordinates targetCoordinates) {
+    public List<Coordinates> getRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
         List<Coordinates> route = new ArrayList<>();
         int rowDifference = targetCoordinates.row - startCoordinates.row;
         int columnDifference = targetCoordinates.column - startCoordinates.column;
@@ -15,7 +15,7 @@ public class RouteFinder {
         if (ifTargetOnNextCell(rowDifference, columnDifference)) {
             route.add(targetCoordinates);
         } else {
-            route.addAll(findRoute(world, copyWorld, startCoordinates, targetCoordinates));
+            route.addAll(findRoute(world, startCoordinates, targetCoordinates));
         }
 
         route.remove(startCoordinates);
@@ -24,16 +24,16 @@ public class RouteFinder {
         return route;
     }
 
-    public List<Coordinates> findRoute(World world, World copyWorld, Coordinates startCoordinates, Coordinates targetCoordinates) {
+    public List<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
         List<Coordinates> route = new ArrayList<>();
         Set<Coordinates> openSet = new HashSet<>();
         Set<Coordinates> closedSet = new HashSet<>();
         Coordinates previousCoordinates = startCoordinates;
-        Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, copyWorld, startCoordinates, targetCoordinates, openSet, closedSet);
+        Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, startCoordinates, targetCoordinates, openSet, closedSet);
 
         if (neighboringCells.size() > 0) {
             while (!Objects.equals(previousCoordinates, targetCoordinates)) {
-                openSet.addAll(getNeighboringCellsForRoute(world, copyWorld, previousCoordinates, targetCoordinates, openSet, closedSet));
+                openSet.addAll(getNeighboringCellsForRoute(world, previousCoordinates, targetCoordinates, openSet, closedSet));
                 closedSet.add(previousCoordinates);
 
                 calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
@@ -66,7 +66,7 @@ public class RouteFinder {
                (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 0);
     }
 
-    public Set<Coordinates> getNeighboringCellsForRoute(World world, World copyWorld, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
+    public Set<Coordinates> getNeighboringCellsForRoute(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column));

@@ -43,7 +43,7 @@ public class World {
                 };
 
                 switch (entityClass) {
-                    case "Money" -> newEntity = new Money(false);
+                    case "Money" -> newEntity = new Money();
 
                     case "Employer" -> newEntity = new Employer(1, 10, 3);
 
@@ -63,9 +63,7 @@ public class World {
     public Coordinates getNewEntityCoordinates() {
         Coordinates newEntityCoordinates = Coordinates.EMPTY;
 
-        while (!this.isCellEmpty(newEntityCoordinates) ||
-               Coordinates.EMPTY.equals(newEntityCoordinates)
-        ) {
+        while (!newEntityCoordinates.isPassable(this)) {
             int row = random.nextInt(10);
             int column = random.nextInt(10);
             newEntityCoordinates = new Coordinates(row, column);

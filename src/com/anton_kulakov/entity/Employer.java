@@ -1,7 +1,6 @@
 package com.anton_kulakov.entity;
 
 import com.anton_kulakov.Coordinates;
-import com.anton_kulakov.World;
 
 public class Employer extends Person {
 
@@ -10,9 +9,8 @@ public class Employer extends Person {
     }
 
     @Override
-     void attack(World world, World copyWorld, Coordinates targetCoordinates) {
-        Entity target = world.entities.get(targetCoordinates);
-        target.coordinates = Coordinates.EMPTY;
+     void attack(Entity targetMoney) {
+        targetMoney.coordinates = Coordinates.EMPTY;
         this.changeHP(5);
     }
 

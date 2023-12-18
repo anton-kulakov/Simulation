@@ -5,5 +5,5 @@ import java.util.Random;
 
 public abstract class Action {
     public static Random random = new Random();
-    public abstract void doAction(World world, World copyWorld);
+    public abstract void doAction(World world);
 }
