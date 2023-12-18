@@ -12,7 +12,7 @@ public class WorldConsoleRenderer {
                 if (world.isCellEmpty(row, column)) {
                     line += "   ";
                 } else {
-                    line += getEntityImage(world.getEntity(new Coordinates(row, column)));
+                    line += getEntityImage(world.entities.get(new Coordinates(row, column)));
                 }
             }
             System.out.println(line);

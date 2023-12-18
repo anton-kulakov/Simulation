@@ -1,10 +1,7 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.entity.*;
-
 import java.util.HashMap;
-import java.util.Objects;
-
 import static com.anton_kulakov.action.Action.random;
 
 public class World {
@@ -17,18 +14,6 @@ public class World {
             }
         }
         return true;
-    }
-    public boolean isCellEmpty(Coordinates coordinates) {
-        for (Coordinates coordinateInWorld : entities.keySet()) {
-            if (Objects.equals(coordinateInWorld.row, coordinates.row) && Objects.equals(coordinateInWorld.column, coordinates.column)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public Entity getEntity(Coordinates coordinates) {
-        return entities.get(coordinates);
     }
 
     public void addEntity(String entityClass) {

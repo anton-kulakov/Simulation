@@ -47,8 +47,7 @@ public abstract class Person extends Entity {
 
     public Coordinates findTarget(World world, Coordinates startCoordinates) {
         Coordinates target = Coordinates.EMPTY;
-        Person person = (Person) world.getEntity(startCoordinates);
-        Class<? extends Entity> targetClass = person.getTargetClass();
+        Class<? extends Entity> targetClass = this.getTargetClass();
         int minDistance = 100;
         int distanceFromAtoB;
 
