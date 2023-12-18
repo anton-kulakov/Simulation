@@ -39,6 +39,7 @@ public class RouteFinder {
                 calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
                 previousCoordinates = getNewPreviousCoordinates(openSet, closedSet);
                 if (Coordinates.EMPTY.equals(previousCoordinates)) {
+                    int a = 123;
                     break;
                 }
             }
@@ -115,7 +116,7 @@ public class RouteFinder {
     }
 
     private Coordinates getNewPreviousCoordinates(Set<Coordinates> openSet, Set<Coordinates> closedSet) {
-        int minFValue = 100;
+        int minFValue = Integer.MAX_VALUE;
         Coordinates newPreviousCoordinates = Coordinates.EMPTY;
 
         for (Coordinates coordinates : openSet) {

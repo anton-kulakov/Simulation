@@ -27,16 +27,15 @@ public abstract class Person extends Entity {
     }
 
     public void makeMove(World world) {
-        Coordinates targetCoordinates = findTarget(world, this.coordinates);
-        Entity targetEntity = world.entities.get(targetCoordinates);
-        List<Coordinates> route = routeFinder.getRoute(world, this.coordinates, targetCoordinates);
+        Entity targetEntity = findTarget(world, this.coordinates);
+        List<Coordinates> route = routeFinder.getRoute(world, this.coordinates, targetEntity.coordinates);
 
         if (!route.isEmpty()) {
             int limit = Math.min(route.size(), this.speed);
             this.coordinates = route.get(limit - 1);
 
             this.hp -= this.hpRequiredForMove;
-        } else if (targetCoordinates != Coordinates.EMPTY){
+        } else if (targetEntity.coordinates != Coordinates.EMPTY){
             attack(targetEntity);
         }
 
@@ -45,8 +44,9 @@ public abstract class Person extends Entity {
         }
     }
 
-    public Coordinates findTarget(World world, Coordinates startCoordinates) {
-        Coordinates target = Coordinates.EMPTY;
+    public Entity findTarget(World world, Coordinates startCoordinates) {
+        Entity target = new Entity() {};
+        target.coordinates = Coordinates.EMPTY;
         Class<? extends Entity> targetClass = this.getTargetClass();
         int minDistance = 100;
         int distanceFromAtoB;
@@ -59,7 +59,7 @@ public abstract class Person extends Entity {
                 );
 
                 if (distanceFromAtoB < minDistance && entity.coordinates != Coordinates.EMPTY) {
-                    target = entity.coordinates;
+                    target = entity;
                     minDistance = distanceFromAtoB;
                 }
             }

@@ -9,7 +9,7 @@ public class Main {
 
 
                 while (true) {
-                        simulation.nextTurn();
+                         simulation.nextTurn();
 
                         counter++;
                 }
