@@ -7,6 +7,8 @@ public class Simulation {
     private final World world = new World();
     private int turnsCounter = 0;
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
+    public boolean isPaused = false;
+    public String currentState = ""; // к удалению
     private final List<Action> initActions = List.of(
             new SetupDefaultWorld(),
             new PrintStartInfo()
@@ -17,27 +19,51 @@ public class Simulation {
     );
 
     public void startSimulation() {
-
         for (Action action : initActions) {
             action.doAction(world);
         }
 
         renderer.render(world);
+
+        nextTurn();
     }
-    public void nextTurn() {
-        for (Action action : turnActions) {
-            action.doAction(world);
+    public synchronized void nextTurn() {
+        while (true) {
+            if (this.isPaused) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            currentState = "Шаг " + turnsCounter; // к удалению
+            System.out.println(currentState); // к удалению
+
+            for (Action action : turnActions) {
+                action.doAction(world);
+            }
+
+            renderer.render(world);
+            System.out.println("Введите \"p + Enter\", чтобы сделать паузу");
+
+            turnsCounter++;
+
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
-        renderer.render(world);
-
-        turnsCounter++;
     }
 
-//    public void pauseSimulation() {
-//        // приостановить бесконечный цикл симуляции и рендеринга
-//        Thread.onSpinWait();
-//        // 23-11-2023 остановился здесь. Нужно понять, как поставить выполнение программы на паузу
-//        // в частности, нужно прочитать про метод onSpinWait(). Возможно он поможет
-//    }
+
+    public void pauseSimulation() {
+        this.isPaused = true;
+    }
+
+    public synchronized void resumeSimulation() {
+        this.isPaused = false;
+        notify();
+    }
 }

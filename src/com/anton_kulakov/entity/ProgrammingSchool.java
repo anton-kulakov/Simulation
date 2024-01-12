@@ -3,8 +3,11 @@ package com.anton_kulakov.entity;
 import com.anton_kulakov.action.MakeMove;
 
 public class ProgrammingSchool extends Person {
-    public ProgrammingSchool(int speed, int hp, int hpRequiredForMove) {
+    private int powerOfAttack;
+
+    public ProgrammingSchool(int speed, int hp, int hpRequiredForMove, int powerOfAttack) {
         super(speed, hp, hpRequiredForMove);
+        this.powerOfAttack = powerOfAttack;
     }
 
     @Override
@@ -14,6 +17,8 @@ public class ProgrammingSchool extends Person {
                 MakeMove.newJuniorCounter++;
                 this.changeHP(3);
             }
+
+            targetJunior.changeHP(-powerOfAttack);
         }
     }
 

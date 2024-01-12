@@ -17,7 +17,7 @@ public class SetupDefaultWorld extends Action {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());
-            entityList.add(new ProgrammingSchool(1, 7, 1));
+            entityList.add(new ProgrammingSchool(1, 7, 1, 2));
             entityList.add(new Employer(1, 10, 3));
             entityList.add(new Junior(1, 8, 2, 3));
         }

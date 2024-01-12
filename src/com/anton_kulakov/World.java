@@ -34,7 +34,7 @@ public class World {
 
                     case "Junior" -> newEntity = new Junior(1, 8, 2, 3);
 
-                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 7, 1);
+                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 7, 1, 2);
                 }
 
                 newEntity.coordinates = newEntityCoordinates;
