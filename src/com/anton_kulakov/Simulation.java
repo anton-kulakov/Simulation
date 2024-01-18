@@ -10,8 +10,7 @@ public class Simulation {
     public boolean isPaused = false;
     public String currentState = ""; // к удалению
     private final List<Action> initActions = List.of(
-            new SetupDefaultWorld(),
-            new PrintStartInfo()
+            new SetupDefaultWorld()
     );
     private final List<Action> turnActions = List.of(
             new MakeMove(),
@@ -25,10 +24,18 @@ public class Simulation {
 
         renderer.render(world);
 
+        try {
+            Thread.sleep(1300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         nextTurn();
     }
     public synchronized void nextTurn() {
         while (true) {
+            turnsCounter++;
+
             if (this.isPaused) {
                 try {
                     wait();
@@ -45,12 +52,14 @@ public class Simulation {
             }
 
             renderer.render(world);
-            System.out.println("Введите \"p + Enter\", чтобы сделать паузу");
 
-            turnsCounter++;
+            System.out.println("Введите:");
+            System.out.println("p + Enter - чтобы сделать паузу");
+            System.out.println("e + Enter - для завершения симуляции");
+            System.out.println();
 
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
