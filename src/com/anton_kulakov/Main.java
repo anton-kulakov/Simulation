@@ -8,15 +8,15 @@ public class Main {
                 Scanner scanner = new Scanner(System.in);
 
                 while (true) {
-                        System.out.println("Введите:");
-                        System.out.println("s + Enter - для запуска симуляции");
-                        System.out.println("e + Enter - для завершения симуляции");
+                        System.out.println("Нажмите:");
+                        System.out.println("Enter - для запуска симуляции");
+                        System.out.println("e + Enter - для завершения программы");
 
-                        char input = Character.toLowerCase(scanner.next().charAt(0));
+                        String input = scanner.nextLine();
 
                         switch (input) {
-                                case 's' -> runSimulation(scanner);
-                                case 'e' -> System.exit(0);
+                                case "" -> runSimulation(scanner);
+                                case "e" -> System.exit(0);
                                 default -> printIncorrectInputInfo();
                         }
                 }
@@ -33,7 +33,7 @@ public class Main {
                                         работают над тем, чтобы получить у Junior-разработчиков контакты друзей и \s
                                         родственников с целью продажи своих курсов. Это в итоге приводит к еще большему \s
                                         увеличению количества молодых специалистов на рынке труда и росту конкуренции.
-                                """
+                        """
                 );
                 System.out.println();
         }
@@ -44,21 +44,21 @@ public class Main {
                 simulationThread.start();
 
                 while (true) {
-                        System.out.println("Введите:");
-                        System.out.println("p + Enter - чтобы сделать паузу");
-                        System.out.println("r + Enter - для возобновления симуляции");
-                        System.out.println("e + Enter - для завершения симуляции");
+                        System.out.println("Нажмите:");
+                        System.out.println("Enter - чтобы сделать паузу или возобновить симуляцию");
+                        System.out.println("e + Enter - для завершения программы");
 
-                        char input = Character.toLowerCase(scanner.next().charAt(0));
+                        String input = scanner.nextLine();
 
                         switch (input) {
-                                case 'r' -> simulation.resumeSimulation();
-                                case 'p' -> {
-                                        String currentState = simulation.currentState;
-                                        simulation.pauseSimulation();
-                                        System.out.println("Текущее состояние: " + currentState);
+                                case "" -> {
+                                        if (simulation.isPaused) {
+                                                simulation.resumeSimulation();
+                                        } else {
+                                                simulation.pauseSimulation();
+                                        }
                                 }
-                                case 'e' -> System.exit(0);
+                                case "e" -> System.exit(0);
                                 default -> printIncorrectInputInfo();
                         }
                 }

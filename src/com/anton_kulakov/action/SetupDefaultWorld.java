@@ -3,6 +3,7 @@ package com.anton_kulakov.action;
 import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class SetupDefaultWorld extends Action {
         int i = MAX_ENTITIES_ON_START - 1;
         while (i >= 0) {
             int row = random.nextInt(10);
-            int column = random.nextInt(10);
+            int column = random.nextInt(7);
 
             if(world.isCellEmpty(row, column)) {
                 Coordinates coordinates = new Coordinates(row, column);

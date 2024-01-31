@@ -1,6 +1,7 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.action.*;
+
 import java.util.List;
 
 public class Simulation {
@@ -8,7 +9,6 @@ public class Simulation {
     private int turnsCounter = 0;
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     public boolean isPaused = false;
-    public String currentState = ""; // к удалению
     private final List<Action> initActions = List.of(
             new SetupDefaultWorld()
     );
@@ -25,7 +25,7 @@ public class Simulation {
         renderer.render(world);
 
         try {
-            Thread.sleep(1300);
+            Thread.sleep(1200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -44,22 +44,19 @@ public class Simulation {
                 }
             }
 
-            currentState = "Шаг " + turnsCounter; // к удалению
-            System.out.println(currentState); // к удалению
-
             for (Action action : turnActions) {
                 action.doAction(world);
             }
 
             renderer.render(world);
 
-            System.out.println("Введите:");
-            System.out.println("p + Enter - чтобы сделать паузу");
-            System.out.println("e + Enter - для завершения симуляции");
+            System.out.println("Нажмите:");
+            System.out.println("Enter - чтобы сделать паузу");
+            System.out.println("e + Enter - для завершения программы");
             System.out.println();
 
             try {
-                Thread.sleep(1300);
+                Thread.sleep(1200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -69,6 +66,7 @@ public class Simulation {
 
     public void pauseSimulation() {
         this.isPaused = true;
+        renderer.render(world);
     }
 
     public synchronized void resumeSimulation() {

@@ -2,6 +2,7 @@ package com.anton_kulakov;
 
 import com.anton_kulakov.entity.*;
 import java.util.HashMap;
+
 import static com.anton_kulakov.action.Action.random;
 
 public class World {
