@@ -18,9 +18,9 @@ public class SetupDefaultWorld extends Action {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());
-            entityList.add(new ProgrammingSchool(1, 7, 1, 2));
-            entityList.add(new Employer(1, 10, 3));
-            entityList.add(new Junior(1, 8, 2, 3));
+            entityList.add(new ProgrammingSchool(1, 14, 1, 2));
+            entityList.add(new Employer(1, 20, 1));
+            entityList.add(new Junior(1, 16, 2, 1));
         }
 
         int i = MAX_ENTITIES_ON_START - 1;

@@ -37,8 +37,10 @@ public class MakeMove extends Action {
 
         int counter = 0;
         while (counter < newJuniorCounter) {
+            Junior newJunior = new Junior(1, 16, 2, 1);
             Coordinates coordinatesForNewJunior = world.getNewEntityCoordinates();
-            world.entities.put(coordinatesForNewJunior, new Junior(1, 8, 2, 3));
+            newJunior.coordinates = coordinatesForNewJunior;
+            world.entities.put(coordinatesForNewJunior, newJunior);
 
             counter++;
         }

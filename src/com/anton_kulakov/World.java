@@ -9,8 +9,8 @@ public class World {
     public HashMap<Coordinates, Entity> entities = new HashMap<>();
 
     public boolean isCellEmpty(int row, int column) {
-        for (Coordinates coordinateInWorld : entities.keySet()) {
-            if (coordinateInWorld.row == row && coordinateInWorld.column == column) {
+        for (Coordinates coordinates : entities.keySet()) {
+            if (coordinates.row == row && coordinates.column == column) {
                 return false;
             }
         }
@@ -31,11 +31,11 @@ public class World {
                 switch (entityClass) {
                     case "Money" -> newEntity = new Money();
 
-                    case "Employer" -> newEntity = new Employer(1, 10, 3);
+                    case "Employer" -> newEntity = new Employer(1, 20, 1);
 
-                    case "Junior" -> newEntity = new Junior(1, 8, 2, 3);
+                    case "Junior" -> newEntity = new Junior(1, 16, 2, 1);
 
-                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 7, 1, 2);
+                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 14, 1, 2);
                 }
 
                 newEntity.coordinates = newEntityCoordinates;
@@ -51,7 +51,7 @@ public class World {
 
         while (!newEntityCoordinates.isPassable(this)) {
             int row = random.nextInt(10);
-            int column = random.nextInt(10);
+            int column = random.nextInt(7);
             newEntityCoordinates = new Coordinates(row, column);
         }
 
