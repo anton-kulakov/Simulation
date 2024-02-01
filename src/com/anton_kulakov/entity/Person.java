@@ -64,8 +64,6 @@ public abstract class Person extends Entity {
             }
         }
 
-        int a = 123;
-
         return target;
     }
 

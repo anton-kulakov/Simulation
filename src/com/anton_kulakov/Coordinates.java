@@ -23,7 +23,7 @@ public class Coordinates {
             if (
                     (Objects.equals(entity.coordinates.row, this.row) && Objects.equals(entity.coordinates.column, this.column) ||
                             (this.row < 0 || this.row > 9) ||
-                            (this.column < 0 || this.column > 6)
+                            (this.column < 0 || this.column > 9)
                     )) { return false; }
         }
         return true;

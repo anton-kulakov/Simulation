@@ -26,7 +26,8 @@ public class WorldConsoleRenderer {
     }
 
     private String getEntityImage(Entity entity) {
-        String image = switch (entity.getClass().getSimpleName()) {
+
+        return switch (entity.getClass().getSimpleName()) {
             case "House" -> "\uD83C\uDFE0";
             case "Money" -> "\uD83D\uDCB0";
             case "ProgrammingSchool" -> "\uD83C\uDF93";
@@ -35,8 +36,6 @@ public class WorldConsoleRenderer {
             case "Junior" -> "\uD83D\uDC76";
             default -> "";
         };
-
-        return image;
     }
 
     private void clearConsole() {
