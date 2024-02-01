@@ -12,11 +12,11 @@ public class WorldConsoleRenderer {
         System.out.println();
         for (int row = 9; row >= 0; row--) {
             String line = row + "|";
-            for (int column = 0; column <= 6; column++) {
+            for (int column = 0; column < 9; column++) {
                 if (world.isCellEmpty(row, column)) {
-                    line += "     ";
+                    line += "\u26AB";
                 } else {
-                    line += " " + getEntityImage(world.entities.get(new Coordinates(row, column)));
+                    line += getEntityImage(world.entities.get(new Coordinates(row, column)));
                 }
             }
             System.out.println(line);
@@ -27,16 +27,16 @@ public class WorldConsoleRenderer {
 
     private String getEntityImage(Entity entity) {
         String image = switch (entity.getClass().getSimpleName()) {
-            case "House" -> "🏠";
+            case "House" -> "\uD83C\uDFE0";
             case "Money" -> "\uD83D\uDCB0";
             case "ProgrammingSchool" -> "\uD83C\uDF93";
             case "Tree" -> "\uD83C\uDF33";
-            case "Employer" -> "\uD83D\uDC68\u200D\uD83D\uDCBC";
+            case "Employer" -> "\uD83E\uDDD4";
             case "Junior" -> "\uD83D\uDC76";
             default -> "";
         };
 
-        return " " + image + " ";
+        return image;
     }
 
     private void clearConsole() {

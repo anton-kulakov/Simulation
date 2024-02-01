@@ -51,7 +51,7 @@ public class World {
 
         while (!newEntityCoordinates.isPassable(this)) {
             int row = random.nextInt(10);
-            int column = random.nextInt(7);
+            int column = random.nextInt(9);
             newEntityCoordinates = new Coordinates(row, column);
         }
 

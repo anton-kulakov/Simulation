@@ -26,7 +26,7 @@ public class SetupDefaultWorld extends Action {
         int i = MAX_ENTITIES_ON_START - 1;
         while (i >= 0) {
             int row = random.nextInt(10);
-            int column = random.nextInt(7);
+            int column = random.nextInt(9);
 
             if(world.isCellEmpty(row, column)) {
                 Coordinates coordinates = new Coordinates(row, column);
