@@ -1,5 +1,6 @@
 package com.anton_kulakov.action;
 
+import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.entity.*;
 
@@ -7,8 +8,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddEntities extends Action {
+    public static int newJuniorCounter;
     public void doAction(World world) {
         HashMap<String, Integer> sumOfEntities = countEntities(world);
+        int counter = 0;
+
+        while (counter < newJuniorCounter) {
+            Junior newJunior = new Junior(1, 16, 2, 1);
+            Coordinates coordinatesForNewJunior = world.getNewEntityCoordinates();
+            newJunior.coordinates = coordinatesForNewJunior;
+            world.entities.put(coordinatesForNewJunior, newJunior);
+
+            counter++;
+        }
 
         for (Map.Entry<String, Integer> entityAmount : sumOfEntities.entrySet()) {
             if (entityAmount.getValue() < 2) {

@@ -23,6 +23,7 @@ public class Main {
         }
 
         public static void printStartInfo() {
+                System.out.println("Я сборка с новым добавлением джунов");
                 System.out.println();
                 System.out.println(
                         """

@@ -8,9 +8,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class MakeMove extends Action {
-    public static int newJuniorCounter;
+    // public static int newJuniorCounter;
     public void doAction(World world) {
-        newJuniorCounter = 0;
+        // newJuniorCounter = 0;
+        AddEntities.newJuniorCounter = 0;
         Iterator<Entity> iterator = world.entities.values().iterator();
 
         while (iterator.hasNext()) {
@@ -35,14 +36,14 @@ public class MakeMove extends Action {
         world.entities.clear();
         world.entities.putAll(entitiesCopy);
 
-        int counter = 0;
-        while (counter < newJuniorCounter) {
-            Junior newJunior = new Junior(1, 16, 2, 1);
-            Coordinates coordinatesForNewJunior = world.getNewEntityCoordinates();
-            newJunior.coordinates = coordinatesForNewJunior;
-            world.entities.put(coordinatesForNewJunior, newJunior);
-
-            counter++;
-        }
+//        int counter = 0;
+//        while (counter < newJuniorCounter) {
+//            Junior newJunior = new Junior(1, 16, 2, 1);
+//            Coordinates coordinatesForNewJunior = world.getNewEntityCoordinates();
+//            newJunior.coordinates = coordinatesForNewJunior;
+//            world.entities.put(coordinatesForNewJunior, newJunior);
+//
+//            counter++;
+//        }
     }
 }
