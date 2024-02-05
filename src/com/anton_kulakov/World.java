@@ -6,6 +6,8 @@ import java.util.HashMap;
 import static com.anton_kulakov.action.Action.random;
 
 public class World {
+    public static final int MAX_ROWS = 9;
+    public static final int MAX_COLUMNS = 9;
     public HashMap<Coordinates, Entity> entities = new HashMap<>();
 
     public boolean isCellEmpty(int row, int column) {
@@ -50,8 +52,8 @@ public class World {
         Coordinates newEntityCoordinates = Coordinates.EMPTY;
 
         while (!newEntityCoordinates.isPassable(this)) {
-            int row = random.nextInt(10);
-            int column = random.nextInt(9);
+            int row = random.nextInt(MAX_ROWS + 1);
+            int column = random.nextInt(MAX_COLUMNS + 1);
             newEntityCoordinates = new Coordinates(row, column);
         }
 

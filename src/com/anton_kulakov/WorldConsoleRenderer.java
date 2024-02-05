@@ -10,9 +10,9 @@ public class WorldConsoleRenderer {
         clearConsole();
 
         System.out.println();
-        for (int row = 9; row >= 0; row--) {
+        for (int row = World.MAX_ROWS; row >= 0; row--) {
             String line = row + "|";
-            for (int column = 0; column < 9; column++) {
+            for (int column = 0; column < World.MAX_COLUMNS; column++) {
                 if (world.isCellEmpty(row, column)) {
                     line += "\u26AB";
                 } else {

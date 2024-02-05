@@ -22,8 +22,8 @@ public class Coordinates {
         for (Entity entity : world.entities.values()) {
             if (
                     (Objects.equals(entity.coordinates.row, this.row) && Objects.equals(entity.coordinates.column, this.column) ||
-                            (this.row < 0 || this.row > 9) ||
-                            (this.column < 0 || this.column > 9)
+                            (this.row < 0 || this.row > World.MAX_ROWS) ||
+                            (this.column < 0 || this.column > World.MAX_COLUMNS)
                     )) { return false; }
         }
         return true;
