@@ -14,6 +14,7 @@ public class SetupDefaultWorld extends Action {
     public void doAction(World world) {
         List<Entity> entityList = new ArrayList<>();
         int max = MAX_ENTITIES_ON_START / NUMBER_OF_TYPES_OF_ENTITIES;
+
         for (int j = 0; j < max; j++) {
             entityList.add(new House());
             entityList.add(new Tree());

@@ -47,7 +47,7 @@ public class World {
         cells.put(coordinates, entity);
     }
 
-    public void insertEntity(HashMap<Coordinates, Entity> cellsCopy) {
+    public void insertCollectionOfEntities(HashMap<Coordinates, Entity> cellsCopy) {
         cells.putAll(cellsCopy);
     }
 

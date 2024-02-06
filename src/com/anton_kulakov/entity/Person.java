@@ -28,14 +28,18 @@ public abstract class Person extends Entity {
 
     public void makeMove(World world) {
         Entity targetEntity = findTarget(world, this.coordinates);
+
+        if(targetEntity.coordinates == Coordinates.EMPTY) {
+            return;
+        }
+
         List<Coordinates> route = routeFinder.getRoute(world, this.coordinates, targetEntity.coordinates);
 
         if (!route.isEmpty()) {
             int limit = Math.min(route.size(), this.speed);
             this.coordinates = route.get(limit - 1);
-
             this.hp -= this.hpRequiredForMove;
-        } else if (targetEntity.coordinates != Coordinates.EMPTY){
+        } else {
             attack(targetEntity);
         }
 

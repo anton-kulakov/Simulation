@@ -32,6 +32,6 @@ public class MakeMove extends Action {
         }
 
         world.clearWorld();
-        world.insertEntity(cellsCopy);
+        world.insertCollectionOfEntities(cellsCopy);
     }
 }
