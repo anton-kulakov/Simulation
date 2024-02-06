@@ -2,10 +2,10 @@ package com.anton_kulakov.entity;
 
 import com.anton_kulakov.action.AddEntities;
 
-public class ProgrammingSchool extends Person {
+public class ProgrammingCourse extends Person {
     private int powerOfAttack;
 
-    public ProgrammingSchool(int speed, int hp, int hpRequiredForMove, int powerOfAttack) {
+    public ProgrammingCourse(int speed, int hp, int hpRequiredForMove, int powerOfAttack) {
         super(speed, hp, hpRequiredForMove);
         this.powerOfAttack = powerOfAttack;
     }
@@ -15,7 +15,6 @@ public class ProgrammingSchool extends Person {
         if (targetEntity instanceof Junior targetJunior) {
             if (targetJunior.getHP() > 15) {
                 AddEntities.newJuniorCounter++;
-
                 this.changeHP(3);
             }
 

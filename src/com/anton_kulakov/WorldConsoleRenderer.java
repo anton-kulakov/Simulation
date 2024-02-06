@@ -8,10 +8,11 @@ public class WorldConsoleRenderer {
     ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
     public void render(World world) {
         clearConsole();
-
         System.out.println();
+
         for (int row = World.MAX_ROWS; row >= 0; row--) {
             String line = row + "|";
+
             for (int column = 0; column < World.MAX_COLUMNS; column++) {
                 if (world.isCellEmpty(row, column)) {
                     line += "\u26AB";
@@ -19,6 +20,7 @@ public class WorldConsoleRenderer {
                     line += getEntityImage(world.entities.get(new Coordinates(row, column)));
                 }
             }
+
             System.out.println(line);
         }
 
@@ -26,11 +28,10 @@ public class WorldConsoleRenderer {
     }
 
     private String getEntityImage(Entity entity) {
-
         return switch (entity.getClass().getSimpleName()) {
             case "House" -> "\uD83C\uDFE0";
             case "Money" -> "\uD83D\uDCB0";
-            case "ProgrammingSchool" -> "\uD83C\uDF93";
+            case "ProgrammingCourse" -> "\uD83C\uDF93";
             case "Tree" -> "\uD83C\uDF33";
             case "Employer" -> "\uD83E\uDDD4";
             case "Junior" -> "\uD83D\uDC76";

@@ -10,7 +10,7 @@ public abstract class Person extends Entity {
     private final int speed;
     private int hp;
     private final int hpRequiredForMove;
-    public RouteFinder routeFinder = new RouteFinder();
+    private final RouteFinder routeFinder = new RouteFinder();
 
     public Person(int speed, int hp, int hpRequiredForMove) {
         this.speed = speed;
@@ -48,7 +48,7 @@ public abstract class Person extends Entity {
         Entity target = new Entity() {};
         target.coordinates = Coordinates.EMPTY;
         Class<? extends Entity> targetClass = this.getTargetClass();
-        int minDistance = 100;
+        int minDistance = 1000;
         int distanceFromAtoB;
 
         for (Entity entity : world.entities.values()) {
@@ -69,5 +69,5 @@ public abstract class Person extends Entity {
 
     abstract void attack(Entity targetEntity);
 
-    public abstract Class<? extends Entity> getTargetClass();
+    abstract Class<? extends Entity> getTargetClass();
 }

@@ -21,7 +21,7 @@ public class World {
 
     public void addEntity(String entityClass) {
         int newEntityCounter = 0;
-        int newEntityLimit = random.nextInt(4);
+        int newEntityLimit = random.nextInt(5);
 
         while (newEntityCounter < newEntityLimit) {
             Coordinates newEntityCoordinates = getNewEntityCoordinates();
@@ -37,7 +37,7 @@ public class World {
 
                     case "Junior" -> newEntity = new Junior(1, 16, 2, 1);
 
-                    case "ProgrammingSchool" -> newEntity = new ProgrammingSchool(1, 14, 1, 2);
+                    case "ProgrammingCourse" -> newEntity = new ProgrammingCourse(1, 14, 1, 2);
                 }
 
                 newEntity.coordinates = newEntityCoordinates;

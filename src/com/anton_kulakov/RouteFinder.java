@@ -29,17 +29,17 @@ public class RouteFinder {
         Set<Coordinates> openSet = new HashSet<>();
         Set<Coordinates> closedSet = new HashSet<>();
         Coordinates previousCoordinates = startCoordinates;
-        Set<Coordinates> neighboringCells = getNeighboringCellsForRoute(world, startCoordinates, targetCoordinates, openSet, closedSet);
+        Set<Coordinates> neighboringCells = getNeighboringCells(world, startCoordinates, targetCoordinates, openSet, closedSet);
 
         if (neighboringCells.size() > 0) {
             while (!Objects.equals(previousCoordinates, targetCoordinates)) {
-                openSet.addAll(getNeighboringCellsForRoute(world, previousCoordinates, targetCoordinates, openSet, closedSet));
+                openSet.addAll(getNeighboringCells(world, previousCoordinates, targetCoordinates, openSet, closedSet));
                 closedSet.add(previousCoordinates);
 
                 calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
                 previousCoordinates = getNewPreviousCoordinates(openSet, closedSet);
+
                 if (Coordinates.EMPTY.equals(previousCoordinates)) {
-                    int a = 123;
                     break;
                 }
             }
@@ -50,6 +50,7 @@ public class RouteFinder {
 
                 while (!Objects.equals(elementOfRoute, startCoordinates)) {
                     elementOfRoute = elementOfRoute.parent;
+
                     if (!route.contains(elementOfRoute)) {
                         route.add(elementOfRoute);
                     }
@@ -67,7 +68,7 @@ public class RouteFinder {
                (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 0);
     }
 
-    public Set<Coordinates> getNeighboringCellsForRoute(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
+    public Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column));

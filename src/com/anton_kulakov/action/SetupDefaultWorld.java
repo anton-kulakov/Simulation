@@ -18,21 +18,22 @@ public class SetupDefaultWorld extends Action {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());
-            entityList.add(new ProgrammingSchool(1, 14, 1, 2));
+            entityList.add(new ProgrammingCourse(1, 14, 1, 2));
             entityList.add(new Employer(1, 20, 1));
             entityList.add(new Junior(1, 16, 2, 1));
         }
 
-        int i = MAX_ENTITIES_ON_START - 1;
-        while (i >= 0) {
+        int i = MAX_ENTITIES_ON_START;
+
+        while (i > 0) {
             int row = random.nextInt(World.MAX_ROWS);
             int column = random.nextInt(World.MAX_COLUMNS);
 
             if(world.isCellEmpty(row, column)) {
                 Coordinates coordinates = new Coordinates(row, column);
-                world.entities.put(coordinates, entityList.get(i));
+                world.entities.put(coordinates, entityList.get(i - 1));
                 world.entities.get(coordinates).coordinates = coordinates;
-                entityList.remove(i);
+                entityList.remove(i - 1);
                 i--;
             }
         }

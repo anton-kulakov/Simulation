@@ -31,10 +31,11 @@ public class AddEntities extends Action {
 
     private HashMap<String, Integer> countEntities(World world) {
         HashMap<String, Integer> sumOfEntities = new HashMap<>();
+
         sumOfEntities.put("Money", 0);
         sumOfEntities.put("Employer", 0);
         sumOfEntities.put("Junior", 0);
-        sumOfEntities.put("ProgrammingSchool", 0);
+        sumOfEntities.put("ProgrammingCourse", 0);
 
         for (Entity entity : world.entities.values()) {
             switch (entity.getClass().getSimpleName()) {
@@ -53,9 +54,9 @@ public class AddEntities extends Action {
                     sumOfEntities.put("Junior", value + 1);
                 }
 
-                case "ProgrammingSchool" -> {
-                    int value = sumOfEntities.get("ProgrammingSchool");
-                    sumOfEntities.put("ProgrammingSchool", value + 1);
+                case "ProgrammingCourse" -> {
+                    int value = sumOfEntities.get("ProgrammingCourse");
+                    sumOfEntities.put("ProgrammingCourse", value + 1);
                 }
             }
         }
