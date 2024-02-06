@@ -9,9 +9,9 @@ public class Coordinates {
     public final Integer row;
     public final Integer column;
     Coordinates parent;
-    public int FValue = 0;
-    public int GValue = 0;
-    public int HValue = 0;
+    int FValue = 0;
+    int GValue = 0;
+    int HValue = 0;
 
     public Coordinates(Integer row, Integer column) {
         this.row = row;
