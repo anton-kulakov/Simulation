@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class MakeMove extends Action {
     public void doAction(World world) {
-        AppendEntities.newJuniorCounter = 0;
+        AppendEntities.setNewJuniorCounterToZero();
         Iterator<Entity> iterator = world.getEntitiesIterator();
 
         while (iterator.hasNext()) {

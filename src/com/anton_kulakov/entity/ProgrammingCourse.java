@@ -14,7 +14,7 @@ public class ProgrammingCourse extends Person {
     void attack(Entity targetEntity) {
         if (targetEntity instanceof Junior targetJunior) {
             if (targetJunior.getHP() > 15) {
-                AppendEntities.newJuniorCounter++;
+                AppendEntities.incrementNewJuniorCounter();
                 this.changeHP(3);
             }
 
