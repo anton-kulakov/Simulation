@@ -12,7 +12,7 @@ public class Main {
                         System.out.println("Enter - для запуска симуляции");
                         System.out.println("e + Enter - для завершения программы");
 
-                        String input = scanner.nextLine();
+                        String input = scanner.nextLine().toLowerCase();
 
                         switch (input) {
                                 case "" -> runSimulation(scanner);
@@ -47,7 +47,7 @@ public class Main {
                         System.out.println("Enter - чтобы сделать паузу или возобновить симуляцию");
                         System.out.println("e + Enter - для завершения программы");
 
-                        String input = scanner.nextLine();
+                        String input = scanner.nextLine().toLowerCase();
 
                         switch (input) {
                                 case "" -> {

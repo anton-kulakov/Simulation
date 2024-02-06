@@ -14,7 +14,7 @@ public class Simulation {
     );
     private final List<Action> turnActions = List.of(
             new MakeMove(),
-            new AddEntities()
+            new AppendEntities()
     );
 
     public void startSimulation() {

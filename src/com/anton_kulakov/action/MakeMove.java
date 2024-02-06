@@ -9,8 +9,8 @@ import java.util.Iterator;
 
 public class MakeMove extends Action {
     public void doAction(World world) {
-        AddEntities.newJuniorCounter = 0;
-        Iterator<Entity> iterator = world.entities.values().iterator();
+        AppendEntities.newJuniorCounter = 0;
+        Iterator<Entity> iterator = world.getEntitiesIterator();
 
         while (iterator.hasNext()) {
             Entity entity = iterator.next();
@@ -20,18 +20,18 @@ public class MakeMove extends Action {
             }
         }
 
-        Iterator<Entity> afterMoveIterator = world.entities.values().iterator();
-        HashMap<Coordinates, Entity> entitiesCopy = new HashMap<>();
+        Iterator<Entity> afterMoveIterator = world.getEntitiesIterator();
+        HashMap<Coordinates, Entity> cellsCopy = new HashMap<>();
 
         while (afterMoveIterator.hasNext()) {
             Entity entity = afterMoveIterator.next();
 
             if (entity.coordinates != Coordinates.EMPTY) {
-                entitiesCopy.put(entity.coordinates, entity);
+                cellsCopy.put(entity.coordinates, entity);
             }
         }
 
-        world.entities.clear();
-        world.entities.putAll(entitiesCopy);
+        world.clearWorld();
+        world.insertEntity(cellsCopy);
     }
 }

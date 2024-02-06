@@ -26,13 +26,11 @@ public class SetupDefaultWorld extends Action {
         int i = MAX_ENTITIES_ON_START;
 
         while (i > 0) {
-            int row = random.nextInt(World.MAX_ROWS);
-            int column = random.nextInt(World.MAX_COLUMNS);
+            int row = random.nextInt(World.getMaxRows());
+            int column = random.nextInt(World.getMaxColumns());
 
             if(world.isCellEmpty(row, column)) {
-                Coordinates coordinates = new Coordinates(row, column);
-                world.entities.put(coordinates, entityList.get(i - 1));
-                world.entities.get(coordinates).coordinates = coordinates;
+                world.insertEntity(new Coordinates(row, column), entityList.get(i - 1));
                 entityList.remove(i - 1);
                 i--;
             }

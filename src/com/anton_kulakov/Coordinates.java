@@ -19,11 +19,11 @@ public class Coordinates {
     }
 
     public boolean isPassable(World world) {
-        for (Entity entity : world.entities.values()) {
+        for (Entity entity : world.getCollectionOfEntities()) {
             if (
                     (Objects.equals(entity.coordinates.row, this.row) && Objects.equals(entity.coordinates.column, this.column) ||
-                            (this.row < 0 || this.row > World.MAX_ROWS) ||
-                            (this.column < 0 || this.column > World.MAX_COLUMNS)
+                            (this.row < 0 || this.row > World.getMaxRows()) ||
+                            (this.column < 0 || this.column > World.getMaxColumns())
                     )) { return false; }
         }
         return true;

@@ -1,17 +1,40 @@
 package com.anton_kulakov;
 
 import com.anton_kulakov.entity.*;
+
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import static com.anton_kulakov.action.Action.random;
 
 public class World {
-    public static final int MAX_ROWS = 9;
-    public static final int MAX_COLUMNS = 9;
-    public HashMap<Coordinates, Entity> entities = new HashMap<>();
+    private static final int MAX_ROWS = 9;
+    private static final int MAX_COLUMNS = 9;
+    private final HashMap<Coordinates, Entity> cells = new HashMap<>();
+
+    public static int getMaxRows() {
+        return MAX_ROWS;
+    }
+
+    public static int getMaxColumns() {
+        return MAX_COLUMNS;
+    }
+
+    public Entity getEntity(Coordinates coordinates) {
+        return cells.get(coordinates);
+    }
+
+    public Collection<Entity> getCollectionOfEntities() {
+        return cells.values();
+    }
+
+    public Iterator<Entity> getEntitiesIterator() {
+        return getCollectionOfEntities().iterator();
+    }
 
     public boolean isCellEmpty(int row, int column) {
-        for (Coordinates coordinates : entities.keySet()) {
+        for (Coordinates coordinates : cells.keySet()) {
             if (coordinates.row == row && coordinates.column == column) {
                 return false;
             }
@@ -19,7 +42,20 @@ public class World {
         return true;
     }
 
-    public void addEntity(String entityClass) {
+    public void insertEntity(Coordinates coordinates, Entity entity) {
+        entity.coordinates = coordinates;
+        cells.put(coordinates, entity);
+    }
+
+    public void insertEntity(HashMap<Coordinates, Entity> cellsCopy) {
+        cells.putAll(cellsCopy);
+    }
+
+    public void clearWorld() {
+        cells.clear();
+    }
+
+    public void appendEntity(String entityClass) {
         int newEntityCounter = 0;
         int newEntityLimit = random.nextInt(5);
 
@@ -40,8 +76,7 @@ public class World {
                     case "ProgrammingCourse" -> newEntity = new ProgrammingCourse(1, 14, 1, 2);
                 }
 
-                newEntity.coordinates = newEntityCoordinates;
-                this.entities.put(newEntity.coordinates, newEntity);
+                insertEntity(newEntityCoordinates, newEntity);
             }
 
             newEntityCounter++;

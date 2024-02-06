@@ -1,30 +1,24 @@
 package com.anton_kulakov.action;
-
-import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.entity.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddEntities extends Action {
+public class AppendEntities extends Action {
     public static int newJuniorCounter;
     public void doAction(World world) {
         HashMap<String, Integer> sumOfEntities = countEntities(world);
         int counter = 0;
 
         while (counter < newJuniorCounter) {
-            Junior newJunior = new Junior(1, 16, 2, 1);
-            Coordinates coordinatesForNewJunior = world.getNewEntityCoordinates();
-            newJunior.coordinates = coordinatesForNewJunior;
-            world.entities.put(coordinatesForNewJunior, newJunior);
-
+            world.insertEntity(world.getNewEntityCoordinates(), new Junior(1, 16, 2, 1));
             counter++;
         }
 
         for (Map.Entry<String, Integer> entityAmount : sumOfEntities.entrySet()) {
             if (entityAmount.getValue() < 2) {
-                world.addEntity(entityAmount.getKey());
+                world.appendEntity(entityAmount.getKey());
             }
         }
     }
@@ -37,7 +31,7 @@ public class AddEntities extends Action {
         sumOfEntities.put("Junior", 0);
         sumOfEntities.put("ProgrammingCourse", 0);
 
-        for (Entity entity : world.entities.values()) {
+        for (Entity entity : world.getCollectionOfEntities()) {
             switch (entity.getClass().getSimpleName()) {
                 case "Money" -> {
                     int value = sumOfEntities.get("Money");

@@ -1,6 +1,6 @@
 package com.anton_kulakov.entity;
 
-import com.anton_kulakov.action.AddEntities;
+import com.anton_kulakov.action.AppendEntities;
 
 public class ProgrammingCourse extends Person {
     private int powerOfAttack;
@@ -14,7 +14,7 @@ public class ProgrammingCourse extends Person {
     void attack(Entity targetEntity) {
         if (targetEntity instanceof Junior targetJunior) {
             if (targetJunior.getHP() > 15) {
-                AddEntities.newJuniorCounter++;
+                AppendEntities.newJuniorCounter++;
                 this.changeHP(3);
             }
 

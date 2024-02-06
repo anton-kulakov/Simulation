@@ -5,19 +5,19 @@ import com.anton_kulakov.entity.Entity;
 import java.io.IOException;
 
 public class WorldConsoleRenderer {
-    ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
+    private static final ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
     public void render(World world) {
         clearConsole();
         System.out.println();
 
-        for (int row = World.MAX_ROWS; row >= 0; row--) {
+        for (int row = World.getMaxRows(); row >= 0; row--) {
             String line = row + "|";
 
-            for (int column = 0; column < World.MAX_COLUMNS; column++) {
+            for (int column = 0; column < World.getMaxColumns(); column++) {
                 if (world.isCellEmpty(row, column)) {
                     line += "\u26AB";
                 } else {
-                    line += getEntityImage(world.entities.get(new Coordinates(row, column)));
+                    line += getEntityImage(world.getEntity(new Coordinates(row, column)));
                 }
             }
 
