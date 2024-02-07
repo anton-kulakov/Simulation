@@ -7,7 +7,7 @@ import com.anton_kulakov.entity.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SetupDefaultWorld extends Action {
+public class SetupDefaultWorldAction extends Action {
     private static final int MAX_ENTITIES_ON_START = 24;
     private static final int NUMBER_OF_ENTITIES_TYPES = 6;
 

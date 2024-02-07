@@ -9,11 +9,11 @@ public class Simulation {
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     public boolean isPaused = false;
     private final List<Action> initActions = List.of(
-            new SetupDefaultWorld()
+            new SetupDefaultWorldAction()
     );
     private final List<Action> turnActions = List.of(
-            new MakeMove(),
-            new AppendEntities()
+            new MakeMoveAction(),
+            new AppendEntitiesAction()
     );
 
     public void startSimulation() {

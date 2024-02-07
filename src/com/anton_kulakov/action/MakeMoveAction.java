@@ -7,9 +7,9 @@ import com.anton_kulakov.entity.*;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class MakeMove extends Action {
+public class MakeMoveAction extends Action {
     public void perform(World world) {
-        AppendEntities.setNewJuniorCounter(0);
+        AppendEntitiesAction.setNewJuniorCounter(0);
         Iterator<Entity> iterator = world.getEntitiesIterator();
 
         while (iterator.hasNext()) {

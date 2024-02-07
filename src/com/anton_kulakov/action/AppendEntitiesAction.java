@@ -5,7 +5,7 @@ import com.anton_kulakov.entity.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppendEntities extends Action {
+public class AppendEntitiesAction extends Action {
     private static int newJuniorCounter;
     public void perform(World world) {
         HashMap<String, Integer> sumOfEntities = countEntities(world);
