@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class AppendEntities extends Action {
     private static int newJuniorCounter;
-    public void doAction(World world) {
+    public void perform(World world) {
         HashMap<String, Integer> sumOfEntities = countEntities(world);
         int counter = 0;
 
@@ -62,7 +62,7 @@ public class AppendEntities extends Action {
         newJuniorCounter++;
     }
 
-    public static void setNewJuniorCounterToZero() {
-        newJuniorCounter = 0;
+    public static void setNewJuniorCounter(int i) {
+        newJuniorCounter = i;
     }
 }

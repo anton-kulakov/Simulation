@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class MakeMove extends Action {
-    public void doAction(World world) {
-        AppendEntities.setNewJuniorCounterToZero();
+    public void perform(World world) {
+        AppendEntities.setNewJuniorCounter(0);
         Iterator<Entity> iterator = world.getEntitiesIterator();
 
         while (iterator.hasNext()) {

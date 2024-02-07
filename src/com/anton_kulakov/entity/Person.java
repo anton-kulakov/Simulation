@@ -53,17 +53,18 @@ public abstract class Person extends Entity {
         target.coordinates = Coordinates.EMPTY;
         Class<? extends Entity> targetClass = this.getTargetClass();
         int minDistance = 1000;
-        int distanceFromAtoB;
+        int distanceFromStartToTarget;
 
         for (Entity entity : world.getCollectionOfEntities()) {
             if (entity.getClass().equals(targetClass)) {
-                distanceFromAtoB = (int) Math.sqrt(Math.pow((entity.coordinates.row - startCoordinates.row), 2) +
+                distanceFromStartToTarget =
+                        (int) Math.sqrt(Math.pow((entity.coordinates.row - startCoordinates.row), 2) +
                         Math.pow((entity.coordinates.column - startCoordinates.column), 2)
                 );
 
-                if (distanceFromAtoB < minDistance && entity.coordinates != Coordinates.EMPTY) {
+                if (distanceFromStartToTarget < minDistance && entity.coordinates != Coordinates.EMPTY) {
                     target = entity;
-                    minDistance = distanceFromAtoB;
+                    minDistance = distanceFromStartToTarget;
                 }
             }
         }

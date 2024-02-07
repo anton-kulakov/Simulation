@@ -9,13 +9,13 @@ import java.util.List;
 
 public class SetupDefaultWorld extends Action {
     private static final int MAX_ENTITIES_ON_START = 24;
-    private static final int NUMBER_OF_TYPES_OF_ENTITIES = 6;
+    private static final int NUMBER_OF_ENTITIES_TYPES = 6;
 
-    public void doAction(World world) {
+    public void perform(World world) {
         List<Entity> entityList = new ArrayList<>();
-        int max = MAX_ENTITIES_ON_START / NUMBER_OF_TYPES_OF_ENTITIES;
+        int limit = MAX_ENTITIES_ON_START / NUMBER_OF_ENTITIES_TYPES;
 
-        for (int j = 0; j < max; j++) {
+        for (int i = 0; i < limit; i++) {
             entityList.add(new House());
             entityList.add(new Tree());
             entityList.add(new Money());

@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Simulation {
     private final World world = new World();
-    private int turnsCounter = 0;
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     public boolean isPaused = false;
     private final List<Action> initActions = List.of(
@@ -19,7 +18,7 @@ public class Simulation {
 
     public void startSimulation() {
         for (Action action : initActions) {
-            action.doAction(world);
+            action.perform(world);
         }
 
         renderer.render(world);
@@ -34,7 +33,6 @@ public class Simulation {
     }
     public synchronized void nextTurn() {
         while (true) {
-            turnsCounter++;
 
             if (this.isPaused) {
                 try {
@@ -45,7 +43,7 @@ public class Simulation {
             }
 
             for (Action action : turnActions) {
-                action.doAction(world);
+                action.perform(world);
             }
 
             renderer.render(world);
