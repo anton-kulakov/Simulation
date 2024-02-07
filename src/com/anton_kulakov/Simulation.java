@@ -23,11 +23,11 @@ public class Simulation {
 
         renderer.render(world);
 
-        try {
-            Thread.sleep(1200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1200);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         nextTurn();
     }
@@ -53,11 +53,11 @@ public class Simulation {
             System.out.println("e + Enter - для завершения программы");
             System.out.println();
 
-            try {
-                Thread.sleep(1200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(1200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 

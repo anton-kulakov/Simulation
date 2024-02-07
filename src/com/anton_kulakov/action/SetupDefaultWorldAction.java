@@ -1,6 +1,5 @@
 package com.anton_kulakov.action;
 
-import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.entity.*;
 
@@ -27,14 +26,9 @@ public class SetupDefaultWorldAction extends Action {
         int i = MAX_ENTITIES_ON_START;
 
         while (i > 0) {
-            int row = random.nextInt(World.getMaxRows());
-            int column = random.nextInt(World.getMaxColumns());
-
-            if(world.isCellEmpty(row, column)) {
-                world.insertEntity(new Coordinates(row, column), entityList.get(i - 1));
-                entityList.remove(i - 1);
-                i--;
-            }
+            world.insertEntity(world.getNewEntityCoordinates(), entityList.get(i - 1));
+            entityList.remove(i - 1);
+            i--;
         }
     }
 }

@@ -5,12 +5,12 @@ import com.anton_kulakov.entity.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import static com.anton_kulakov.action.Action.random;
+import java.util.Random;
 
 public class World {
     private static final int MAX_ROWS = 9;
     private static final int MAX_COLUMNS = 9;
+    private static final Random random = new Random();
     private final HashMap<Coordinates, Entity> cells = new HashMap<>();
 
     public static int getMaxRows() {
