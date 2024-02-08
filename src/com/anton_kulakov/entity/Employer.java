@@ -15,7 +15,7 @@ public class Employer extends Person {
     }
 
     @Override
-    public Class<? extends Entity> getTargetClass() {
+    Class<? extends Entity> getTargetClass() {
         return Money.class;
     }
 }

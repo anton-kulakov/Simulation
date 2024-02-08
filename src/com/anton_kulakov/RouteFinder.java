@@ -24,7 +24,7 @@ public class RouteFinder {
         return route;
     }
 
-    public List<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
+    private List<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
         List<Coordinates> route = new ArrayList<>();
         Set<Coordinates> openSet = new HashSet<>();
         Set<Coordinates> closedSet = new HashSet<>();
@@ -68,7 +68,7 @@ public class RouteFinder {
                (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 0);
     }
 
-    public Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
+    private Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
         neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column));

@@ -48,7 +48,7 @@ public abstract class Person extends Entity {
         }
     }
 
-    public Entity findTarget(World world, Coordinates startCoordinates) {
+    private Entity findTarget(World world, Coordinates startCoordinates) {
         Entity target = new Entity() {};
         target.coordinates = Coordinates.EMPTY;
         Class<? extends Entity> targetClass = this.getTargetClass();

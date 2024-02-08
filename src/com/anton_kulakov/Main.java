@@ -22,7 +22,7 @@ public class Main {
                 }
         }
 
-        public static void printStartInfo() {
+        private static void printStartInfo() {
                 System.out.println();
                 System.out.println(
                         """
@@ -37,7 +37,7 @@ public class Main {
                 );
         }
 
-        public static void runSimulation(Scanner scanner) {
+        private static void runSimulation(Scanner scanner) {
                 Simulation simulation = new Simulation();
                 Thread simulationThread = new Thread(simulation::startSimulation);
                 simulationThread.start();
@@ -51,7 +51,7 @@ public class Main {
 
                         switch (input) {
                                 case "" -> {
-                                        if (simulation.isPaused) {
+                                        if (simulation.isPaused()) {
                                                 simulation.resumeSimulation();
                                         } else {
                                                 simulation.pauseSimulation();
@@ -62,7 +62,7 @@ public class Main {
                         }
                 }
         }
-        public static void printIncorrectInputInfo() {
+        private static void printIncorrectInputInfo() {
                 System.out.println("Вы ввели другой символ");
                 System.out.println();
         }

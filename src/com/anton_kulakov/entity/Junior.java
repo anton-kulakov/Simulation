@@ -22,7 +22,7 @@ public class Junior extends Person {
     }
 
     @Override
-    public Class<? extends Entity> getTargetClass() {
+    Class<? extends Entity> getTargetClass() {
         return Employer.class;
     }
 }

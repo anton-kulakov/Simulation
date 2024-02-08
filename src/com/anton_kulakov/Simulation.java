@@ -7,7 +7,7 @@ import java.util.List;
 public class Simulation {
     private final World world = new World();
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
-    public boolean isPaused = false;
+    private boolean isPaused = false;
     private final List<Action> initActions = List.of(
             new SetupDefaultWorldAction()
     );
@@ -26,7 +26,7 @@ public class Simulation {
 
         nextTurn();
     }
-    public synchronized void nextTurn() {
+    private synchronized void nextTurn() {
         while (true) {
 
             if (this.isPaused) {
@@ -59,6 +59,10 @@ public class Simulation {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 
     public void pauseSimulation() {
