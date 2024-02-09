@@ -5,8 +5,8 @@ import java.util.*;
 public class RouteFinder {
     public List<Coordinates> getRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
         List<Coordinates> route = new ArrayList<>();
-        int rowDifference = targetCoordinates.row - startCoordinates.row;
-        int columnDifference = targetCoordinates.column - startCoordinates.column;
+        int rowDifference = targetCoordinates.getRow() - startCoordinates.getRow();
+        int columnDifference = targetCoordinates.getColumn() - startCoordinates.getColumn();
 
         if (Coordinates.EMPTY.equals(targetCoordinates)) {
             return route;
@@ -36,8 +36,7 @@ public class RouteFinder {
                 openSet.addAll(getNeighboringCells(world, previousCoordinates, targetCoordinates, openSet, closedSet));
                 closedSet.add(previousCoordinates);
 
-                calculateFGHValues(previousCoordinates, targetCoordinates, openSet);
-                previousCoordinates = getNewPreviousCoordinates(openSet, closedSet);
+                previousCoordinates = getNewPreviousCoordinates(previousCoordinates, targetCoordinates, openSet, closedSet);
 
                 if (Coordinates.EMPTY.equals(previousCoordinates)) {
                     break;
@@ -45,11 +44,11 @@ public class RouteFinder {
             }
 
             if (openSet.contains(targetCoordinates)) {
-                targetCoordinates.parent = previousCoordinates.parent;
+                targetCoordinates.setParent(previousCoordinates.getParent());
                 Coordinates elementOfRoute = targetCoordinates;
 
                 while (!Objects.equals(elementOfRoute, startCoordinates)) {
-                    elementOfRoute = elementOfRoute.parent;
+                    elementOfRoute = elementOfRoute.getParent();
 
                     if (!route.contains(elementOfRoute)) {
                         route.add(elementOfRoute);
@@ -71,58 +70,36 @@ public class RouteFinder {
     private Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
-        neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column));
-        neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column + 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.row, previousCoordinates.column + 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.row - 1, previousCoordinates.column + 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.row - 1, previousCoordinates.column));
-        neighboringCells.add(new Coordinates(previousCoordinates.row - 1, previousCoordinates.column - 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.row - 1, previousCoordinates.column - 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.row, previousCoordinates.column - 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.row + 1, previousCoordinates.column - 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow() + 1, previousCoordinates.getColumn()));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow() + 1, previousCoordinates.getColumn() + 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow(), previousCoordinates.getColumn() + 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow() - 1, previousCoordinates.getColumn() + 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow() - 1, previousCoordinates.getColumn()));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow()- 1, previousCoordinates.getColumn() - 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow() - 1, previousCoordinates.getColumn() - 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow(), previousCoordinates.getColumn() - 1));
+        neighboringCells.add(new Coordinates(previousCoordinates.getRow() + 1, previousCoordinates.getColumn() - 1));
 
         neighboringCells.removeIf(cell -> !cell.equals(targetCoordinates) && !cell.isPassable(world));
         neighboringCells.removeIf(closedSet::contains);
 
         for (Coordinates cell : neighboringCells) {
             if (!openSet.contains(cell)) {
-                cell.parent = previousCoordinates;
+                cell.setParent(previousCoordinates);
             }
         }
 
         return neighboringCells;
     }
 
-    private void calculateFGHValues(Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet) {
-        int potentialGValue;
-
-        for (Coordinates coordinates : openSet) {
-            if (coordinates.HValue == 0) {
-                coordinates.HValue = 10 * (Math.abs(targetCoordinates.row - coordinates.row) + Math.abs(targetCoordinates.column - coordinates.column));
-            }
-
-            if (Objects.equals(coordinates.row, coordinates.parent.row) || Objects.equals(coordinates.column, coordinates.parent.column)) {
-                potentialGValue = coordinates.parent.GValue + 10;
-            } else {
-                potentialGValue = coordinates.parent.GValue + 14;
-            }
-
-            if (coordinates.GValue == 0 || coordinates.GValue > potentialGValue) {
-                coordinates.GValue = potentialGValue;
-                coordinates.parent = previousCoordinates;
-            }
-            
-            coordinates.FValue = coordinates.GValue + coordinates.HValue;
-        }
-    }
-
-    private Coordinates getNewPreviousCoordinates(Set<Coordinates> openSet, Set<Coordinates> closedSet) {
+    private Coordinates getNewPreviousCoordinates(Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         int minFValue = Integer.MAX_VALUE;
         Coordinates newPreviousCoordinates = Coordinates.EMPTY;
 
         for (Coordinates coordinates : openSet) {
-            if (coordinates.FValue < minFValue && !closedSet.contains(coordinates)) {
-                minFValue = coordinates.FValue;
+            coordinates.calculateFValue(previousCoordinates, targetCoordinates);
+            if (coordinates.getFValue() < minFValue && !closedSet.contains(coordinates)) {
+                minFValue = coordinates.getFValue();
                 newPreviousCoordinates = coordinates;
             }
         }

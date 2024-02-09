@@ -58,8 +58,8 @@ public abstract class Person extends Entity {
         for (Entity entity : world.getCollectionOfEntities()) {
             if (entity.getClass().equals(targetClass)) {
                 distanceFromStartToTarget =
-                        (int) Math.sqrt(Math.pow((entity.coordinates.row - startCoordinates.row), 2) +
-                        Math.pow((entity.coordinates.column - startCoordinates.column), 2)
+                        (int) Math.sqrt(Math.pow((entity.coordinates.getRow() - startCoordinates.getRow()), 2) +
+                        Math.pow((entity.coordinates.getColumn() - startCoordinates.getColumn()), 2)
                 );
 
                 if (distanceFromStartToTarget < minDistance && entity.coordinates != Coordinates.EMPTY) {

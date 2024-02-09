@@ -6,12 +6,32 @@ import java.util.Objects;
 
 public class Coordinates {
     public static final Coordinates EMPTY = new Coordinates(100, 100);
-    public final Integer row;
-    public final Integer column;
-    Coordinates parent;
-    int FValue = 0;
-    int GValue = 0;
-    int HValue = 0;
+    private final Integer row;
+    private final Integer column;
+    private Coordinates parent;
+    private int FValue = 0;
+    private int GValue = 0;
+    private int HValue = 0;
+
+    public Integer getRow() {
+        return row;
+    }
+
+    public Integer getColumn() {
+        return column;
+    }
+
+    public Coordinates getParent() {
+        return parent;
+    }
+
+    public void setParent(Coordinates parent) {
+        this.parent = parent;
+    }
+
+    public int getFValue() {
+        return FValue;
+    }
 
     public Coordinates(Integer row, Integer column) {
         this.row = row;
@@ -27,6 +47,27 @@ public class Coordinates {
                     )) { return false; }
         }
         return true;
+    }
+
+    public void calculateFValue(Coordinates previousCoordinates, Coordinates targetCoordinates) {
+        int potentialGValue;
+
+        if (HValue == 0) {
+            HValue = 10 * (Math.abs(targetCoordinates.row - row) + Math.abs(targetCoordinates.column - column));
+        }
+
+        if (Objects.equals(row, parent.row) || Objects.equals(column, parent.column)) {
+            potentialGValue = parent.GValue + 10;
+        } else {
+            potentialGValue = parent.GValue + 14;
+        }
+
+        if (GValue == 0 || GValue > potentialGValue) {
+            GValue = potentialGValue;
+            parent = previousCoordinates;
+        }
+
+        FValue = GValue + HValue;
     }
 
     @Override

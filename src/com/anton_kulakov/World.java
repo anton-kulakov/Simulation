@@ -35,7 +35,7 @@ public class World {
 
     public boolean isCellEmpty(int row, int column) {
         for (Coordinates coordinates : cells.keySet()) {
-            if (coordinates.row == row && coordinates.column == column) {
+            if (coordinates.getRow() == row && coordinates.getColumn() == column) {
                 return false;
             }
         }
@@ -86,9 +86,9 @@ public class World {
     public Coordinates getNewEntityCoordinates() {
         Coordinates newEntityCoordinates = Coordinates.EMPTY;
 
-        while (!newEntityCoordinates.isPassable(this)) {
+        while (cells.containsKey(newEntityCoordinates) || newEntityCoordinates.equals(Coordinates.EMPTY)) {
             int row = random.nextInt(MAX_ROWS + 1);
-            int column = random.nextInt(MAX_COLUMNS + 1);
+            int column = random.nextInt(MAX_COLUMNS);
             newEntityCoordinates = new Coordinates(row, column);
         }
 
