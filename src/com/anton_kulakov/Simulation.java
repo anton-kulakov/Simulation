@@ -9,7 +9,12 @@ public class Simulation {
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     private boolean isPaused = false;
     private final List<Action> initActions = List.of(
-            new SetupDefaultWorldAction()
+            new HouseCreationAction(),
+            new TreeCreationEntity(),
+            new MoneyCreationAction(),
+            new EmployerCreationAction(),
+            new JuniorCreationAction(),
+            new ProgrammingCourseCreationAction()
     );
     private final List<Action> turnActions = List.of(
             new MakeMoveAction(),
@@ -17,6 +22,7 @@ public class Simulation {
     );
 
     public void startSimulation() {
+
         for (Action action : initActions) {
             action.perform(world);
         }
