@@ -55,30 +55,6 @@ public class AppendEntitiesAction extends Action {
             }
         });
 
-//        for (Entity entity : world.getCollectionOfEntities()) {
-//            switch (entity.getClass().getSimpleName()) {
-//                case "Money" -> {
-//                    int value = sumOfEntities.get("Money");
-//                    sumOfEntities.put("Money", value + 1);
-//                }
-//
-//                case "Employer" -> {
-//                    int value = sumOfEntities.get("Employer");
-//                    sumOfEntities.put("Employer", value + 1);
-//                }
-//
-//                case "Junior" -> {
-//                    int value = sumOfEntities.get("Junior");
-//                    sumOfEntities.put("Junior", value + 1);
-//                }
-//
-//                case "ProgrammingCourse" -> {
-//                    int value = sumOfEntities.get("ProgrammingCourse");
-//                    sumOfEntities.put("ProgrammingCourse", value + 1);
-//                }
-//            }
-//        }
-
         return sumOfEntities;
     }
 

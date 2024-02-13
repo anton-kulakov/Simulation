@@ -2,10 +2,8 @@ package com.anton_kulakov;
 
 import com.anton_kulakov.entity.*;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Iterator;
 import java.util.Random;
 
 public class World {
@@ -28,10 +26,6 @@ public class World {
 
     public Entity getEntity(Coordinates coordinates) {
         return cells.get(coordinates);
-    }
-
-    public Collection<Entity> getCollectionOfEntities() {
-        return cells.values();
     }
 
     public boolean isCellEmpty(int row, int column) {
@@ -106,6 +100,7 @@ public class World {
                 map.put(coordinatesTEntry.getKey(), coordinatesTEntry.getValue());
             }
         }
+
         return map;
     }
 }
