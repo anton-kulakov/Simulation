@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class MakeMoveAction extends Action {
     public void perform(World world) {
-        AppendEntitiesAction.setNewJuniorCounter(0);
+        AppendEntitiesAction.resetNewJuniorCounter();
         HashMap<Coordinates, Entity> cellsCopy = new HashMap<>();
 
         world.getEntitiesOfType(Person.class).forEach((key, value) -> value.makeMove(world));

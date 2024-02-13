@@ -62,7 +62,7 @@ public class AppendEntitiesAction extends Action {
         newJuniorCounter++;
     }
 
-    static void setNewJuniorCounter(int i) {
-        newJuniorCounter = i;
+    static void resetNewJuniorCounter() {
+        newJuniorCounter = 0;
     }
 }
