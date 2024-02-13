@@ -4,6 +4,7 @@ import com.anton_kulakov.entity.*;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -12,6 +13,10 @@ public class World {
     private static final int MAX_COLUMNS = 9;
     private static final Random random = new Random();
     private final HashMap<Coordinates, Entity> cells = new HashMap<>();
+
+    public HashMap<Coordinates, Entity> getCells() {
+        return cells;
+    }
 
     public static int getMaxRows() {
         return MAX_ROWS;
@@ -27,10 +32,6 @@ public class World {
 
     public Collection<Entity> getCollectionOfEntities() {
         return cells.values();
-    }
-
-    public Iterator<Entity> getEntitiesIterator() {
-        return getCollectionOfEntities().iterator();
     }
 
     public boolean isCellEmpty(int row, int column) {
@@ -93,5 +94,18 @@ public class World {
         }
 
         return newEntityCoordinates;
+    }
+
+    public <T> HashMap<Coordinates, T> getEntitiesOfType(Class<T> type) {
+        HashMap<Coordinates, T> map = new HashMap<>();
+
+        for (Entry<Coordinates, Entity> e : cells.entrySet()) {
+            if (type.isInstance(e
+                    .getValue())) {
+                Entry<Coordinates, T> coordinatesTEntry = (Entry<Coordinates, T>) e;
+                map.put(coordinatesTEntry.getKey(), coordinatesTEntry.getValue());
+            }
+        }
+        return map;
     }
 }

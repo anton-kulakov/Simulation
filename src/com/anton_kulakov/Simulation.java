@@ -10,7 +10,7 @@ public class Simulation {
     private boolean isPaused = false;
     private final List<Action> initActions = List.of(
             new HouseCreationAction(),
-            new TreeCreationEntity(),
+            new TreeCreationAction(),
             new MoneyCreationAction(),
             new EmployerCreationAction(),
             new JuniorCreationAction(),
