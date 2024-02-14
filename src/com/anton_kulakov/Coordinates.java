@@ -38,7 +38,7 @@ public class Coordinates {
     }
 
     public boolean isPassable(World world) {
-        for (Entity entity : world.getCells().values()) {
+        for (Entity entity : world.getEntitiesOfType(Entity.class).values()) {
             if (
                     (Objects.equals(entity.coordinates.row, this.row) && Objects.equals(entity.coordinates.column, this.column) ||
                             (this.row < 0 || this.row > World.getMaxRows()) ||

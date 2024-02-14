@@ -51,21 +51,18 @@ public abstract class Person extends Entity {
     private Entity findTarget(World world, Coordinates startCoordinates) {
         Entity target = new Entity() {};
         target.coordinates = Coordinates.EMPTY;
-        Class<? extends Entity> targetClass = this.getTargetClass();
         int minDistance = 1000;
         int distanceFromStartToTarget;
 
-        for (Entity entity : world.getCells().values()) {
-            if (entity.getClass().equals(targetClass)) {
-                distanceFromStartToTarget =
-                        (int) Math.sqrt(Math.pow((entity.coordinates.getRow() - startCoordinates.getRow()), 2) +
-                        Math.pow((entity.coordinates.getColumn() - startCoordinates.getColumn()), 2)
-                );
+        for (Entity entity : world.getEntitiesOfType(getTargetClass()).values()) {
+            distanceFromStartToTarget =
+                    (int) Math.sqrt(Math.pow((entity.coordinates.getRow() - startCoordinates.getRow()), 2) +
+                            Math.pow((entity.coordinates.getColumn() - startCoordinates.getColumn()), 2)
+                    );
 
-                if (distanceFromStartToTarget < minDistance && entity.coordinates != Coordinates.EMPTY) {
-                    target = entity;
-                    minDistance = distanceFromStartToTarget;
-                }
+            if (distanceFromStartToTarget < minDistance && entity.coordinates != Coordinates.EMPTY) {
+                target = entity;
+                minDistance = distanceFromStartToTarget;
             }
         }
 

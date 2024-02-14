@@ -31,7 +31,7 @@ public class AppendEntitiesAction extends Action {
         sumOfEntities.put("Junior", 0);
         sumOfEntities.put("ProgrammingCourse", 0);
 
-        world.getCells().forEach((key, value) -> {
+        world.getEntitiesOfType(Entity.class).forEach((key, value) -> {
             switch (value.getClass().getSimpleName()) {
                 case "Money" -> {
                     int entityClass = sumOfEntities.get("Money");

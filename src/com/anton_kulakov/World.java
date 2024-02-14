@@ -12,10 +12,6 @@ public class World {
     private static final Random random = new Random();
     private final HashMap<Coordinates, Entity> cells = new HashMap<>();
 
-    public HashMap<Coordinates, Entity> getCells() {
-        return cells;
-    }
-
     public static int getMaxRows() {
         return MAX_ROWS;
     }
@@ -26,6 +22,32 @@ public class World {
 
     public Entity getEntity(Coordinates coordinates) {
         return cells.get(coordinates);
+    }
+
+    public <T> HashMap<Coordinates, T> getEntitiesOfType(Class<T> type) {
+        HashMap<Coordinates, T> map = new HashMap<>();
+
+        for (Entry<Coordinates, Entity> e : cells.entrySet()) {
+            if (type.isInstance(e
+                    .getValue())) {
+                Entry<Coordinates, T> coordinatesTEntry = (Entry<Coordinates, T>) e;
+                map.put(coordinatesTEntry.getKey(), coordinatesTEntry.getValue());
+            }
+        }
+
+        return map;
+    }
+
+    public Coordinates getNewEntityCoordinates() {
+        Coordinates newEntityCoordinates = Coordinates.EMPTY;
+
+        while (cells.containsKey(newEntityCoordinates) || newEntityCoordinates.equals(Coordinates.EMPTY)) {
+            int row = random.nextInt(MAX_ROWS + 1);
+            int column = random.nextInt(MAX_COLUMNS);
+            newEntityCoordinates = new Coordinates(row, column);
+        }
+
+        return newEntityCoordinates;
     }
 
     public boolean isCellEmpty(int row, int column) {
@@ -76,31 +98,5 @@ public class World {
 
             newEntityCounter++;
         }
-    }
-
-    public Coordinates getNewEntityCoordinates() {
-        Coordinates newEntityCoordinates = Coordinates.EMPTY;
-
-        while (cells.containsKey(newEntityCoordinates) || newEntityCoordinates.equals(Coordinates.EMPTY)) {
-            int row = random.nextInt(MAX_ROWS + 1);
-            int column = random.nextInt(MAX_COLUMNS);
-            newEntityCoordinates = new Coordinates(row, column);
-        }
-
-        return newEntityCoordinates;
-    }
-
-    public <T> HashMap<Coordinates, T> getEntitiesOfType(Class<T> type) {
-        HashMap<Coordinates, T> map = new HashMap<>();
-
-        for (Entry<Coordinates, Entity> e : cells.entrySet()) {
-            if (type.isInstance(e
-                    .getValue())) {
-                Entry<Coordinates, T> coordinatesTEntry = (Entry<Coordinates, T>) e;
-                map.put(coordinatesTEntry.getKey(), coordinatesTEntry.getValue());
-            }
-        }
-
-        return map;
     }
 }

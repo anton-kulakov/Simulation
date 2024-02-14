@@ -13,7 +13,7 @@ public class MakeMoveAction extends Action {
 
         world.getEntitiesOfType(Person.class).forEach((key, value) -> value.makeMove(world));
 
-        world.getCells().forEach((key, value) -> {
+        world.getEntitiesOfType(Entity.class).forEach((key, value) -> {
             if (value.coordinates != Coordinates.EMPTY) {
                 cellsCopy.put(value.coordinates, value);
             }

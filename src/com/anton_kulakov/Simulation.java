@@ -28,7 +28,7 @@ public class Simulation {
         }
 
         renderer.render(world);
-//        this.sleep();
+        this.sleep();
 
         nextTurn();
     }
@@ -53,7 +53,7 @@ public class Simulation {
             System.out.println("Нажмите Enter, чтобы сделать паузу");
             System.out.println();
 
-//            this.sleep();
+            this.sleep();
         }
     }
 
