@@ -33,11 +33,15 @@ public abstract class Person extends Entity {
             return;
         }
 
-        List<Coordinates> route = routeFinder.getRoute(world, this.coordinates, targetEntity.coordinates);
+        ArrayDeque<Coordinates> route = routeFinder.getRoute(world, this.coordinates, targetEntity.coordinates);
 
         if (!route.isEmpty()) {
             int limit = Math.min(route.size(), this.speed);
-            this.coordinates = route.get(limit - 1);
+
+            for(int i = 0; i < limit; i++) {
+                this.coordinates = route.pollLast();
+            }
+
             this.hp -= this.hpRequiredForMove;
         } else {
             attack(targetEntity);

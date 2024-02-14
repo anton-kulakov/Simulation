@@ -3,8 +3,8 @@ package com.anton_kulakov;
 import java.util.*;
 
 public class RouteFinder {
-    public List<Coordinates> getRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
-        List<Coordinates> route = new ArrayList<>();
+    public ArrayDeque<Coordinates> getRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
+        ArrayDeque<Coordinates> route = new ArrayDeque<>();
         int rowDifference = targetCoordinates.getRow() - startCoordinates.getRow();
         int columnDifference = targetCoordinates.getColumn() - startCoordinates.getColumn();
 
@@ -24,8 +24,8 @@ public class RouteFinder {
         return route;
     }
 
-    private List<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
-        List<Coordinates> route = new ArrayList<>();
+    private ArrayDeque<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
+        ArrayDeque<Coordinates> route = new ArrayDeque<>();
         Set<Coordinates> openSet = new HashSet<>();
         Set<Coordinates> closedSet = new HashSet<>();
         Coordinates previousCoordinates = startCoordinates;
@@ -57,7 +57,6 @@ public class RouteFinder {
             }
         }
 
-        Collections.reverse(route);
         return route;
     }
 
