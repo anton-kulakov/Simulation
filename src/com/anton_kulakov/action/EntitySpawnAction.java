@@ -5,7 +5,7 @@ import com.anton_kulakov.entity.Entity;
 
 import java.util.Random;
 
-public abstract class EntityCreationAction<T extends Entity> extends Action {
+public abstract class EntitySpawnAction<T extends Entity> extends Action {
     Random random = new Random();
     int entityAmount = getEntityAmount();
     int counter;

@@ -9,12 +9,12 @@ public class Simulation {
     private final WorldConsoleRenderer renderer = new WorldConsoleRenderer();
     private boolean isPaused = false;
     private final List<Action> initActions = List.of(
-            new HouseCreationAction(),
-            new TreeCreationAction(),
-            new MoneyCreationAction(),
-            new EmployerCreationAction(),
-            new JuniorCreationAction(),
-            new ProgrammingCourseCreationAction()
+            new HouseSpawnAction(),
+            new TreeSpawnAction(),
+            new MoneySpawnAction(),
+            new EmployerSpawnAction(),
+            new JuniorSpawnAction(),
+            new ProgrammingCourseSpawnAction()
     );
     private final List<Action> turnActions = List.of(
             new MakeMoveAction(),
