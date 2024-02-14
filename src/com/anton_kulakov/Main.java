@@ -44,7 +44,7 @@ public class Main {
 
                 while (true) {
                         System.out.println("Нажмите:");
-                        System.out.println("Enter - чтобы сделать паузу или возобновить симуляцию");
+                        System.out.println("Enter - чтобы возобновить симуляцию");
                         System.out.println("e + Enter - для завершения программы");
 
                         String input = scanner.nextLine().toLowerCase();

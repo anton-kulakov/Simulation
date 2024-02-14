@@ -13,6 +13,11 @@ public class Coordinates {
     private int GValue = 0;
     private int HValue = 0;
 
+    public Coordinates(Integer row, Integer column) {
+        this.row = row;
+        this.column = column;
+    }
+
     public Integer getRow() {
         return row;
     }
@@ -21,21 +26,15 @@ public class Coordinates {
         return column;
     }
 
+    public int getFValue() {
+        return FValue;
+    }
     public Coordinates getParent() {
         return parent;
     }
 
     public void setParent(Coordinates parent) {
         this.parent = parent;
-    }
-
-    public int getFValue() {
-        return FValue;
-    }
-
-    public Coordinates(Integer row, Integer column) {
-        this.row = row;
-        this.column = column;
     }
 
     public boolean isPassable(World world) {

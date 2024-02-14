@@ -12,7 +12,7 @@ public class RouteFinder {
             return route;
         }
 
-        if (ifTargetOnNextCell(rowDifference, columnDifference)) {
+        if (isTargetOnNextCell(rowDifference, columnDifference)) {
             route.add(targetCoordinates);
         } else {
             route.addAll(findRoute(world, startCoordinates, targetCoordinates));
@@ -61,7 +61,7 @@ public class RouteFinder {
         return route;
     }
 
-    private boolean ifTargetOnNextCell(int rowDifference, int columnDifference) {
+    private boolean isTargetOnNextCell(int rowDifference, int columnDifference) {
         return (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 1) ||
                (Math.abs(rowDifference) == 0 && Math.abs(columnDifference) == 1) ||
                (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 0);
@@ -70,15 +70,12 @@ public class RouteFinder {
     private Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
         Set<Coordinates> neighboringCells = new HashSet<>();
 
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow() + 1, previousCoordinates.getColumn()));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow() + 1, previousCoordinates.getColumn() + 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow(), previousCoordinates.getColumn() + 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow() - 1, previousCoordinates.getColumn() + 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow() - 1, previousCoordinates.getColumn()));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow()- 1, previousCoordinates.getColumn() - 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow() - 1, previousCoordinates.getColumn() - 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow(), previousCoordinates.getColumn() - 1));
-        neighboringCells.add(new Coordinates(previousCoordinates.getRow() + 1, previousCoordinates.getColumn() - 1));
+        for (int row = -1; row <= 1; row++) {
+            for (int column = -1; column <= 1; column++) {
+                if (row == 0 && column == 0) continue;
+                neighboringCells.add(new Coordinates(previousCoordinates.getRow() + row, previousCoordinates.getColumn() + column));
+            }
+        }
 
         neighboringCells.removeIf(cell -> !cell.equals(targetCoordinates) && !cell.isPassable(world));
         neighboringCells.removeIf(closedSet::contains);

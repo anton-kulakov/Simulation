@@ -28,10 +28,11 @@ public class Simulation {
         }
 
         renderer.render(world);
-        this.sleep();
+//        this.sleep();
 
         nextTurn();
     }
+
     private synchronized void nextTurn() {
         while (true) {
 
@@ -49,13 +50,10 @@ public class Simulation {
 
             renderer.render(world);
 
-            System.out.println("Нажмите:");
-            System.out.println("Enter - чтобы сделать паузу");
-            System.out.println("e + Enter - для завершения программы");
+            System.out.println("Нажмите Enter, чтобы сделать паузу");
             System.out.println();
 
-            this.sleep();
-
+//            this.sleep();
         }
     }
 

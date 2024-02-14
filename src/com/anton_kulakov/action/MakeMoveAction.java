@@ -20,6 +20,6 @@ public class MakeMoveAction extends Action {
         });
 
         world.clearWorld();
-        world.insertCollectionOfEntities(cellsCopy);
+        world.insertEntities(cellsCopy);
     }
 }

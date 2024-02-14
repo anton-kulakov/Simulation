@@ -12,7 +12,7 @@ public class AppendEntitiesAction extends Action {
         int counter = 0;
 
         while (counter < newJuniorCounter) {
-            world.insertEntity(world.getNewEntityCoordinates(), new Junior(1, 16, 2, 1));
+            world.insertEntities(world.getNewEntityCoordinates(), new Junior(1, 16, 2, 1));
             counter++;
         }
 

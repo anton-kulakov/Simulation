@@ -12,7 +12,7 @@ public abstract class EntityCreationAction<T extends Entity> extends Action {
     @Override
     public void perform(World world) {
         while (counter < entityAmount) {
-            world.insertEntity(world.getNewEntityCoordinates(), generateEntity());
+            world.insertEntities(world.getNewEntityCoordinates(), generateEntity());
             counter++;
         }
     }

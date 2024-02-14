@@ -37,12 +37,12 @@ public class World {
         return true;
     }
 
-    public void insertEntity(Coordinates coordinates, Entity entity) {
+    public void insertEntities(Coordinates coordinates, Entity entity) {
         entity.coordinates = coordinates;
         cells.put(coordinates, entity);
     }
 
-    public void insertCollectionOfEntities(HashMap<Coordinates, Entity> cellsCopy) {
+    public void insertEntities(HashMap<Coordinates, Entity> cellsCopy) {
         cells.putAll(cellsCopy);
     }
 
@@ -71,7 +71,7 @@ public class World {
                     case "ProgrammingCourse" -> newEntity = new ProgrammingCourse(1, 14, 1, 2);
                 }
 
-                insertEntity(newEntityCoordinates, newEntity);
+                insertEntities(newEntityCoordinates, newEntity);
             }
 
             newEntityCounter++;
