@@ -6,12 +6,8 @@ import java.util.Objects;
 
 public class Coordinates {
     public static final Coordinates EMPTY = new Coordinates(100, 100);
-    private final Integer row;
-    private final Integer column;
-    private Coordinates parent;
-    private int FValue = 0;
-    private int GValue = 0;
-    private int HValue = 0;
+    protected final Integer row;
+    protected final Integer column;
 
     public Coordinates(Integer row, Integer column) {
         this.row = row;
@@ -21,20 +17,8 @@ public class Coordinates {
     public Integer getRow() {
         return row;
     }
-
     public Integer getColumn() {
         return column;
-    }
-
-    public int getFValue() {
-        return FValue;
-    }
-    public Coordinates getParent() {
-        return parent;
-    }
-
-    public void setParent(Coordinates parent) {
-        this.parent = parent;
     }
 
     public boolean isPassable(World world) {
@@ -45,28 +29,8 @@ public class Coordinates {
                             (this.column < 0 || this.column > World.getMaxColumns())
                     )) { return false; }
         }
+
         return true;
-    }
-
-    public void calculateFValue(Coordinates previousCoordinates, Coordinates targetCoordinates) {
-        int potentialGValue;
-
-        if (HValue == 0) {
-            HValue = 10 * (Math.abs(targetCoordinates.row - row) + Math.abs(targetCoordinates.column - column));
-        }
-
-        if (Objects.equals(row, parent.row) || Objects.equals(column, parent.column)) {
-            potentialGValue = parent.GValue + 10;
-        } else {
-            potentialGValue = parent.GValue + 14;
-        }
-
-        if (GValue == 0 || GValue > potentialGValue) {
-            GValue = potentialGValue;
-            parent = previousCoordinates;
-        }
-
-        FValue = GValue + HValue;
     }
 
     @Override
@@ -85,13 +49,5 @@ public class Coordinates {
         int result = row.hashCode();
         result = 31 * result + column.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Coordinates{" +
-                "row=" + row +
-                ", column=" + column +
-                '}';
     }
 }

@@ -22,7 +22,6 @@ public class Simulation {
     );
 
     public void startSimulation() {
-
         for (Action action : initActions) {
             action.perform(world);
         }

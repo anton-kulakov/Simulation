@@ -4,50 +4,56 @@ import java.util.*;
 
 public class RouteFinder {
     public ArrayDeque<Coordinates> getRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
+        PathNode startPathNode = new PathNode(startCoordinates.getRow(), startCoordinates.getColumn());
+        PathNode targetPathNode = new PathNode(targetCoordinates.getRow(), targetCoordinates.getColumn());
+
+        ArrayDeque<PathNode> pathNodeRoute = new ArrayDeque<>();
         ArrayDeque<Coordinates> route = new ArrayDeque<>();
-        int rowDifference = targetCoordinates.getRow() - startCoordinates.getRow();
-        int columnDifference = targetCoordinates.getColumn() - startCoordinates.getColumn();
 
         if (Coordinates.EMPTY.equals(targetCoordinates)) {
             return route;
         }
 
-        if (isTargetOnNextCell(rowDifference, columnDifference)) {
-            route.add(targetCoordinates);
+        if (isTargetOnNextCell(startPathNode, targetPathNode)) {
+            pathNodeRoute.add(targetPathNode);
         } else {
-            route.addAll(findRoute(world, startCoordinates, targetCoordinates));
+            pathNodeRoute.addAll(findRoute(world, startPathNode, targetPathNode));
         }
 
-        route.remove(startCoordinates);
-        route.remove(targetCoordinates);
+        pathNodeRoute.remove(startPathNode);
+        pathNodeRoute.remove(targetPathNode);
+
+        for (PathNode pathNode : pathNodeRoute) {
+            route.add(new Coordinates(pathNode.getRow(), pathNode.getColumn()));
+        }
 
         return route;
     }
 
-    private ArrayDeque<Coordinates> findRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
-        ArrayDeque<Coordinates> route = new ArrayDeque<>();
-        Set<Coordinates> openSet = new HashSet<>();
-        Set<Coordinates> closedSet = new HashSet<>();
-        Coordinates previousCoordinates = startCoordinates;
-        Set<Coordinates> neighboringCells = getNeighboringCells(world, startCoordinates, targetCoordinates, openSet, closedSet);
+    private ArrayDeque<PathNode> findRoute(World world, PathNode startPathNode, PathNode targetPathNode) {
+        ArrayDeque<PathNode> route = new ArrayDeque<>();
+        Set<PathNode> openSet = new HashSet<>();
+        Set<PathNode> closedSet = new HashSet<>();
+        PathNode previousPathNode = startPathNode;
+        Set<PathNode> neighboringCells = getNeighboringPathNodes(world, startPathNode, targetPathNode, openSet, closedSet);
 
         if (neighboringCells.size() > 0) {
-            while (!Objects.equals(previousCoordinates, targetCoordinates)) {
-                openSet.addAll(getNeighboringCells(world, previousCoordinates, targetCoordinates, openSet, closedSet));
-                closedSet.add(previousCoordinates);
+            while (!Objects.equals(previousPathNode, targetPathNode)) {
+                openSet.addAll(getNeighboringPathNodes(world, previousPathNode, targetPathNode, openSet, closedSet));
+                closedSet.add(previousPathNode);
 
-                previousCoordinates = getNewPreviousCoordinates(previousCoordinates, targetCoordinates, openSet, closedSet);
+                previousPathNode = getNewPreviousPathNode(previousPathNode, targetPathNode, openSet, closedSet);
 
-                if (Coordinates.EMPTY.equals(previousCoordinates)) {
+                if (PathNode.EMPTY.equals(previousPathNode)) {
                     break;
                 }
             }
 
-            if (openSet.contains(targetCoordinates)) {
-                targetCoordinates.setParent(previousCoordinates.getParent());
-                Coordinates elementOfRoute = targetCoordinates;
+            if (openSet.contains(targetPathNode)) {
+                targetPathNode.setParent(previousPathNode.getParent());
+                PathNode elementOfRoute = targetPathNode;
 
-                while (!Objects.equals(elementOfRoute, startCoordinates)) {
+                while (!Objects.equals(elementOfRoute, startPathNode)) {
                     elementOfRoute = elementOfRoute.getParent();
 
                     if (!route.contains(elementOfRoute)) {
@@ -60,46 +66,49 @@ public class RouteFinder {
         return route;
     }
 
-    private boolean isTargetOnNextCell(int rowDifference, int columnDifference) {
+    private boolean isTargetOnNextCell(PathNode startPathNode, PathNode targetPathNode) {
+        int rowDifference = targetPathNode.getRow() - startPathNode.getRow();
+        int columnDifference = targetPathNode.getColumn() - startPathNode.getColumn();
+
         return (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 1) ||
                (Math.abs(rowDifference) == 0 && Math.abs(columnDifference) == 1) ||
                (Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 0);
     }
 
-    private Set<Coordinates> getNeighboringCells(World world, Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
-        Set<Coordinates> neighboringCells = new HashSet<>();
+    private Set<PathNode> getNeighboringPathNodes(World world, PathNode previousPathNode, PathNode targetPathNode, Set<PathNode> openSet, Set<PathNode> closedSet) {
+        Set<PathNode> neighboringPathNodes = new HashSet<>();
 
         for (int row = -1; row <= 1; row++) {
             for (int column = -1; column <= 1; column++) {
                 if (row == 0 && column == 0) continue;
-                neighboringCells.add(new Coordinates(previousCoordinates.getRow() + row, previousCoordinates.getColumn() + column));
+                neighboringPathNodes.add(new PathNode(previousPathNode.getRow() + row, previousPathNode.getColumn() + column));
             }
         }
 
-        neighboringCells.removeIf(cell -> !cell.equals(targetCoordinates) && !cell.isPassable(world));
-        neighboringCells.removeIf(closedSet::contains);
+        neighboringPathNodes.removeIf(cell -> !cell.equals(targetPathNode) && !cell.isPassable(world));
+        neighboringPathNodes.removeIf(closedSet::contains);
 
-        for (Coordinates cell : neighboringCells) {
+        for (PathNode cell : neighboringPathNodes) {
             if (!openSet.contains(cell)) {
-                cell.setParent(previousCoordinates);
+                cell.setParent(previousPathNode);
             }
         }
 
-        return neighboringCells;
+        return neighboringPathNodes;
     }
 
-    private Coordinates getNewPreviousCoordinates(Coordinates previousCoordinates, Coordinates targetCoordinates, Set<Coordinates> openSet, Set<Coordinates> closedSet) {
+    private PathNode getNewPreviousPathNode(PathNode previousPathNode, PathNode targetPathNode, Set<PathNode> openSet, Set<PathNode> closedSet) {
         int minFValue = Integer.MAX_VALUE;
-        Coordinates newPreviousCoordinates = Coordinates.EMPTY;
+        PathNode newPreviousPathNode = PathNode.EMPTY;
 
-        for (Coordinates coordinates : openSet) {
-            coordinates.calculateFValue(previousCoordinates, targetCoordinates);
-            if (coordinates.getFValue() < minFValue && !closedSet.contains(coordinates)) {
-                minFValue = coordinates.getFValue();
-                newPreviousCoordinates = coordinates;
+        for (PathNode pathNode : openSet) {
+            pathNode.calculateFValue(previousPathNode, targetPathNode);
+            if (pathNode.getFValue() < minFValue && !closedSet.contains(pathNode)) {
+                minFValue = pathNode.getFValue();
+                newPreviousPathNode = pathNode;
             }
         }
 
-        return newPreviousCoordinates;
+        return newPreviousPathNode;
     }
 }
