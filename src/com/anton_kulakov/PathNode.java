@@ -5,14 +5,14 @@ import java.util.Objects;
 public class PathNode extends Coordinates {
     public static final PathNode EMPTY = new PathNode(200, 200);
     private PathNode parent;
-    private int FValue = 0;
-    private int GValue = 0;
-    private int HValue = 0;
+    private int moveCost = 0;
+    private int moveFromPrevCellToThisCost = 0;
+    private int moveFromThisToTargetCellCost = 0;
     public PathNode(Integer row, Integer column) {
         super(row, column);
     }
-    public int getFValue() {
-        return FValue;
+    public int getMoveCost() {
+        return moveCost;
     }
     public PathNode getParent() {
         return parent;
@@ -21,24 +21,24 @@ public class PathNode extends Coordinates {
         this.parent = parent;
     }
 
-    public void calculateFValue(PathNode previousPathNode, PathNode targetPathNode) {
-        int potentialGValue;
+    public void calculateMoveCost(PathNode previousPathNode, PathNode targetPathNode) {
+        int potentialMoveFromPrevCellToThisCost;
 
-        if (HValue == 0) {
-            HValue = 10 * (Math.abs(targetPathNode.row - row) + Math.abs(targetPathNode.column - column));
+        if (moveFromThisToTargetCellCost == 0) {
+            moveFromThisToTargetCellCost = 10 * (Math.abs(targetPathNode.row - row) + Math.abs(targetPathNode.column - column));
         }
 
         if (Objects.equals(row, parent.row) || Objects.equals(column, parent.column)) {
-            potentialGValue = parent.GValue + 10;
+            potentialMoveFromPrevCellToThisCost = parent.moveFromPrevCellToThisCost + 10;
         } else {
-            potentialGValue = parent.GValue + 14;
+            potentialMoveFromPrevCellToThisCost = parent.moveFromPrevCellToThisCost + 14;
         }
 
-        if (GValue == 0 || GValue > potentialGValue) {
-            GValue = potentialGValue;
+        if (moveFromPrevCellToThisCost == 0 || moveFromPrevCellToThisCost > potentialMoveFromPrevCellToThisCost) {
+            moveFromPrevCellToThisCost = potentialMoveFromPrevCellToThisCost;
             parent = previousPathNode;
         }
 
-        FValue = GValue + HValue;
+        moveCost = moveFromPrevCellToThisCost + moveFromThisToTargetCellCost;
     }
 }

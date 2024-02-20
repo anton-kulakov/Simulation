@@ -43,12 +43,12 @@ public abstract class Person extends Entity {
             }
 
             this.hp -= this.hpRequiredForMove;
-
-            if (this.getHP() <= 0) {
-                this.coordinates = Coordinates.EMPTY;
-            }
         } else {
             attack(targetEntity);
+        }
+
+        if (this.getHP() <= 0) {
+            this.coordinates = Coordinates.EMPTY;
         }
     }
 

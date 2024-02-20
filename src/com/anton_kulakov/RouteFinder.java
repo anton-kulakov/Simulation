@@ -3,14 +3,14 @@ package com.anton_kulakov;
 import java.util.*;
 
 public class RouteFinder {
-    public ArrayDeque<Coordinates> getRoute(World world, Coordinates startCoordinates, Coordinates targetCoordinates) {
-        PathNode startPathNode = new PathNode(startCoordinates.getRow(), startCoordinates.getColumn());
-        PathNode targetPathNode = new PathNode(targetCoordinates.getRow(), targetCoordinates.getColumn());
+    public ArrayDeque<Coordinates> getRoute(World world, Coordinates startCell, Coordinates targetCell) {
+        PathNode startPathNode = new PathNode(startCell.getRow(), startCell.getColumn());
+        PathNode targetPathNode = new PathNode(targetCell.getRow(), targetCell.getColumn());
 
         ArrayDeque<PathNode> pathNodeRoute = new ArrayDeque<>();
         ArrayDeque<Coordinates> route = new ArrayDeque<>();
 
-        if (Coordinates.EMPTY.equals(targetCoordinates)) {
+        if (Coordinates.EMPTY.equals(targetCell)) {
             return route;
         }
 
@@ -35,9 +35,9 @@ public class RouteFinder {
         Set<PathNode> openSet = new HashSet<>();
         Set<PathNode> closedSet = new HashSet<>();
         PathNode previousPathNode = startPathNode;
-        Set<PathNode> neighboringCells = getNeighboringPathNodes(world, startPathNode, targetPathNode, openSet, closedSet);
+        Set<PathNode> neighboringPathNodes = getNeighboringPathNodes(world, startPathNode, targetPathNode, openSet, closedSet);
 
-        if (neighboringCells.size() > 0) {
+        if (neighboringPathNodes.size() > 0) {
             while (!Objects.equals(previousPathNode, targetPathNode)) {
                 openSet.addAll(getNeighboringPathNodes(world, previousPathNode, targetPathNode, openSet, closedSet));
                 closedSet.add(previousPathNode);
@@ -88,9 +88,9 @@ public class RouteFinder {
         neighboringPathNodes.removeIf(cell -> !cell.equals(targetPathNode) && !cell.isPassable(world));
         neighboringPathNodes.removeIf(closedSet::contains);
 
-        for (PathNode cell : neighboringPathNodes) {
-            if (!openSet.contains(cell)) {
-                cell.setParent(previousPathNode);
+        for (PathNode pathNode : neighboringPathNodes) {
+            if (!openSet.contains(pathNode)) {
+                pathNode.setParent(previousPathNode);
             }
         }
 
@@ -98,13 +98,14 @@ public class RouteFinder {
     }
 
     private PathNode getNewPreviousPathNode(PathNode previousPathNode, PathNode targetPathNode, Set<PathNode> openSet, Set<PathNode> closedSet) {
-        int minFValue = Integer.MAX_VALUE;
+        int minMoveCost = Integer.MAX_VALUE;
         PathNode newPreviousPathNode = PathNode.EMPTY;
 
         for (PathNode pathNode : openSet) {
-            pathNode.calculateFValue(previousPathNode, targetPathNode);
-            if (pathNode.getFValue() < minFValue && !closedSet.contains(pathNode)) {
-                minFValue = pathNode.getFValue();
+            pathNode.calculateMoveCost(previousPathNode, targetPathNode);
+
+            if (pathNode.getMoveCost() < minMoveCost && !closedSet.contains(pathNode)) {
+                minMoveCost = pathNode.getMoveCost();
                 newPreviousPathNode = pathNode;
             }
         }

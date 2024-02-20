@@ -8,7 +8,7 @@ import java.util.Map;
 public class AppendEntitiesAction extends Action {
     private static int newJuniorCounter;
     public void perform(World world) {
-        HashMap<String, Integer> sumOfEntities = countEntities(world);
+        HashMap<String, Integer> entityCounterMap = countEntities(world);
         int counter = 0;
 
         while (counter < newJuniorCounter) {
@@ -16,46 +16,46 @@ public class AppendEntitiesAction extends Action {
             counter++;
         }
 
-        for (Map.Entry<String, Integer> entityAmount : sumOfEntities.entrySet()) {
-            if (entityAmount.getValue() < 1) {
-                world.appendEntity(entityAmount.getKey());
+        for (Map.Entry<String, Integer> entity : entityCounterMap.entrySet()) {
+            if (entity.getValue() < 1) {
+                world.appendEntity(entity.getKey());
             }
         }
     }
 
     private HashMap<String, Integer> countEntities(World world) {
-        HashMap<String, Integer> sumOfEntities = new HashMap<>();
+        HashMap<String, Integer> entityCounterMap = new HashMap<>();
 
-        sumOfEntities.put("Money", 0);
-        sumOfEntities.put("Employer", 0);
-        sumOfEntities.put("Junior", 0);
-        sumOfEntities.put("ProgrammingCourse", 0);
+        entityCounterMap.put("Money", 0);
+        entityCounterMap.put("Employer", 0);
+        entityCounterMap.put("Junior", 0);
+        entityCounterMap.put("ProgrammingCourse", 0);
 
         world.getEntitiesOfType(Entity.class).forEach((key, value) -> {
             switch (value.getClass().getSimpleName()) {
                 case "Money" -> {
-                    int entityClass = sumOfEntities.get("Money");
-                    sumOfEntities.put("Money", entityClass + 1);
+                    int entityCounter = entityCounterMap.get("Money");
+                    entityCounterMap.put("Money", entityCounter + 1);
                 }
 
                 case "Employer" -> {
-                    int entityClass = sumOfEntities.get("Employer");
-                    sumOfEntities.put("Employer", entityClass + 1);
+                    int entityCounter = entityCounterMap.get("Employer");
+                    entityCounterMap.put("Employer", entityCounter + 1);
                 }
 
                 case "Junior" -> {
-                    int entityClass = sumOfEntities.get("Junior");
-                    sumOfEntities.put("Junior", entityClass + 1);
+                    int entityCounter = entityCounterMap.get("Junior");
+                    entityCounterMap.put("Junior", entityCounter + 1);
                 }
 
                 case "ProgrammingCourse" -> {
-                    int entityClass = sumOfEntities.get("ProgrammingCourse");
-                    sumOfEntities.put("ProgrammingCourse", entityClass + 1);
+                    int entityCounter = entityCounterMap.get("ProgrammingCourse");
+                    entityCounterMap.put("ProgrammingCourse", entityCounter + 1);
                 }
             }
         });
 
-        return sumOfEntities;
+        return entityCounterMap;
     }
 
     public static void incrementNewJuniorCounter() {
