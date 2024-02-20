@@ -64,17 +64,9 @@ public class World {
         cells.put(coordinates, entity);
     }
 
-    public void insertEntities(HashMap<Coordinates, Entity> cellsCopy) {
-        cells.putAll(cellsCopy);
-    }
-
-    public void clearWorld() {
-        cells.clear();
-    }
-
     public void appendEntity(String entityClass) {
         int newEntityCounter = 0;
-        int newEntityLimit = random.nextInt(5);
+        int newEntityLimit = random.nextInt(4);
 
         while (newEntityCounter < newEntityLimit) {
             Coordinates newEntityCoordinates = getNewEntityCoordinates();
@@ -98,5 +90,15 @@ public class World {
 
             newEntityCounter++;
         }
+    }
+
+    public void removeEntity(Coordinates coordinates) {
+        cells.remove(coordinates);
+    }
+
+    public void moveEntity(Coordinates from, Coordinates to) {
+        Entity entity = getEntity(from);
+        removeEntity(from);
+        insertEntities(to, entity);
     }
 }

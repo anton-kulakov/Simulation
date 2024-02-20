@@ -4,22 +4,22 @@ import com.anton_kulakov.Coordinates;
 import com.anton_kulakov.World;
 import com.anton_kulakov.entity.*;
 
-import java.util.HashMap;
-
 public class MakeMoveAction extends Action {
     public void perform(World world) {
         AppendEntitiesAction.resetNewJuniorCounter();
-        HashMap<Coordinates, Entity> cellsCopy = new HashMap<>();
 
         world.getEntitiesOfType(Person.class).forEach((key, value) -> value.makeMove(world));
 
         world.getEntitiesOfType(Entity.class).forEach((key, value) -> {
-            if (value.coordinates != Coordinates.EMPTY) {
-                cellsCopy.put(value.coordinates, value);
+            if (Coordinates.EMPTY.equals(value.coordinates)) {
+                world.removeEntity(value.coordinates);
             }
         });
 
-        world.clearWorld();
-        world.insertEntities(cellsCopy);
+        world.getEntitiesOfType(Entity.class).forEach((key, value) -> {
+            if (!(key.equals(value.coordinates))) {
+                world.moveEntity(key, value.coordinates);
+            }
+        });
     }
 }
